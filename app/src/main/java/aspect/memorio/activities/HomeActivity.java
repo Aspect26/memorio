@@ -13,10 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import java.text.ParseException;
 
 import aspect.memorio.R;
+import aspect.memorio.activities.adapters.NotesListViewAdapter;
 import aspect.memorio.models.Note;
 import aspect.memorio.storage.DeviceFileStorage;
 import aspect.memorio.storage.Storage;
@@ -30,6 +32,9 @@ public class HomeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.storage = new DeviceFileStorage(this);
+        this.storage.loadAll();
+
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +56,8 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.storage = new DeviceFileStorage(this);
+        ListView notesListView = findViewById(R.id.list_notes);
+        notesListView.setAdapter(new NotesListViewAdapter(this, this.storage.getAll()));
     }
 
     @Override

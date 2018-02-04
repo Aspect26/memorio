@@ -9,23 +9,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
 
 import aspect.memorio.models.Note;
 
 public class DeviceFileStorage implements Storage {
 
     private static final String FILE_NAME = "data.dat";
-
-
-    private List<Note> data;
+    private final List<Note> data;
     private final Context context;
 
     public DeviceFileStorage(Context context) {
         this.context = context;
+        this.data = new ArrayList<>();
     }
 
     @Override
@@ -37,7 +34,7 @@ public class DeviceFileStorage implements Storage {
             inputStream = context.openFileInput(FILE_NAME);
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line = reader.readLine();
-            this.data = new ArrayList<>();
+            this.data.clear();
 
             while (line != null) {
                 Note note = Note.createFromString(line);

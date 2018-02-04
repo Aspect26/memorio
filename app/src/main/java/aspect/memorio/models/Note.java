@@ -51,13 +51,13 @@ public class Note {
 
         stringBuilder.append(this.getText()).append(";");
         stringBuilder.append((this.getDate() != null)? DATE_FORMAT.format(this.getDate()) : "").append(";");
-        stringBuilder.append((this.getNotificationDate() != null)? DATE_FORMAT.format(this.getNotificationDate()) : "").append(";");
+        stringBuilder.append((this.getNotificationDate() != null)? DATE_FORMAT.format(this.getNotificationDate()) : "");
 
         return stringBuilder.toString();
     }
 
     public static Note createFromString(String line) throws ParseException {
-        String[] data = line.split(";");
+        String[] data = line.split(";", -1);
         if (data.length != 3) {
             return null;
         } else {
