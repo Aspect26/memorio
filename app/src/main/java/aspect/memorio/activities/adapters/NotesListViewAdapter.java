@@ -73,7 +73,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Note> {
         } else if (diffInMinutes >= MINUTES_OF_DAY) {
             return diffInMinutes / MINUTES_OF_DAY + " day(s)";
         } else if (diffInMinutes >= MINUTES_OF_HOUR) {
-            return diffInMinutes / MINUTES_OF_HOUR + " minutes(s)";
+            return diffInMinutes / MINUTES_OF_HOUR + " hour(s)";
         } else {
             return diffInMinutes + "minute(s)";
         }
