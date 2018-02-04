@@ -21,6 +21,10 @@ public class Note {
         this.notificationDate = notificationDate;
     }
 
+    public Note() {
+        this("", null, null);
+    }
+
     public String getText() {
         return text;
     }

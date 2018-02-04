@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.text.ParseException;
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity
 
     private static final int REQUEST_ADD_NOTE = 1;
     private Storage storage;
+    private ArrayAdapter<Note> notesViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,8 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         ListView notesListView = findViewById(R.id.list_notes);
-        notesListView.setAdapter(new NotesListViewAdapter(this, this.storage.getAll()));
+        this.notesViewAdapter = new NotesListViewAdapter(this, this.storage.getAll());
+        notesListView.setAdapter(this.notesViewAdapter);
     }
 
     @Override
@@ -80,6 +83,7 @@ public class HomeActivity extends AppCompatActivity
                 if (note != null) {
                     this.storage.addNote(note);
                     this.storage.flushAll();
+                    this.notesViewAdapter.notifyDataSetChanged();
                 }
             } catch (ParseException e) {
                 return;
