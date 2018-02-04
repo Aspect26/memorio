@@ -1,5 +1,6 @@
 package aspect.memorio.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +14,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.text.ParseException;
+
 import aspect.memorio.R;
+import aspect.memorio.models.Note;
+import aspect.memorio.storage.DeviceFileStorage;
+import aspect.memorio.storage.Storage;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int REQUEST_ADD_NOTE = 1;
+    private Storage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +34,11 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_add_note);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                goToNewNoteActivity();
             }
         });
 
@@ -42,6 +50,8 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        this.storage = new DeviceFileStorage(this);
     }
 
     @Override
@@ -51,6 +61,23 @@ public class HomeActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_ADD_NOTE) {
+            // TODO: refactor
+            try {
+                // TODO: resolve this warning
+                Note note = Note.createFromString(data.getExtras().getString("note"));
+                if (note != null) {
+                    this.storage.addNote(note);
+                    this.storage.flushAll();
+                }
+            } catch (ParseException e) {
+                return;
+            }
         }
     }
 
@@ -99,5 +126,15 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void saveNote(Note note) {
+        this.storage.addNote(note);
+        this.storage.flushAll();
+    }
+
+    private void goToNewNoteActivity() {
+        Intent intent = new Intent(this, AddNoteActivity.class);
+        startActivityForResult(intent, REQUEST_ADD_NOTE);
     }
 }

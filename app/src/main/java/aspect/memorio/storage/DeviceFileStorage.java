@@ -9,9 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -21,7 +19,7 @@ import aspect.memorio.models.Note;
 public class DeviceFileStorage implements Storage {
 
     private static final String FILE_NAME = "data.dat";
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MMMM-d-H-m-s");
+
 
     private List<Note> data;
     private final Context context;
@@ -42,7 +40,7 @@ public class DeviceFileStorage implements Storage {
             this.data = new ArrayList<>();
 
             while (line != null) {
-                Note note = this.createNoteFromData(line);
+                Note note = Note.createFromString(line);
                 if (note != null) {
                     this.data.add(note);
                 }
@@ -81,39 +79,11 @@ public class DeviceFileStorage implements Storage {
             writer = new BufferedWriter(new OutputStreamWriter(outputStream));
 
             for (Note note : this.data) {
-                writer.write(this.getNoteStringRepresentation(note));
+                writer.write(note.toString());
                 writer.newLine();
             }
         } catch (Exception e) {
             Log.d("[DeviceFileStorage]", e.getMessage());
         }
     }
-
-    private Note createNoteFromData(String line) throws ParseException {
-        String[] data = line.split(";");
-        if (data.length != 3) {
-            Log.d("[DeviceFileStorage]", "Could not read note: " + line);
-            return null;
-        } else {
-            String text = data[0];
-            String dateText = data[1];
-            String notificationDateText = data[2];
-
-            Date date = (dateText != null && dateText.length() > 0)? DATE_FORMAT.parse(dateText) : null;
-            Date notificationDate = (notificationDateText != null && notificationDateText.length() > 0)? DATE_FORMAT.parse(notificationDateText) : null;
-
-            return new Note(text, date, notificationDate);
-        }
-    }
-
-    private String getNoteStringRepresentation(final Note note) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append(note.getText()).append(";");
-        stringBuilder.append(DATE_FORMAT.format((note.getDate() != null)? note.getDate() : "")).append(";");
-        stringBuilder.append(DATE_FORMAT.format((note.getNotificationDate() != null)? note.getNotificationDate() : "")).append(";");
-
-        return stringBuilder.toString();
-    }
-
 }
