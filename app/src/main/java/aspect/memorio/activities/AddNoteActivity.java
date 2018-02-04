@@ -61,19 +61,22 @@ public class AddNoteActivity extends AppCompatActivity {
             return new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    Date noteDate = note.getDate();
-                    noteDate.setYear(year);
+                    Date noteDate = (note.getDate() == null)? new Date() : note.getDate();
+
+                    noteDate.setYear(year - 1900);
                     noteDate.setMonth(month);
                     noteDate.setDate(day);
+                    note.setDate(noteDate);
                 }
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         } else if (id == DIALOG_CODE_TIME) {
             return new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                    Date noteDate = note.getDate();
+                    Date noteDate = (note.getDate() == null)? new Date() : note.getDate();
                     noteDate.setHours(hour);
                     noteDate.setMinutes(minute);
+                    note.setDate(noteDate);
                 }
             }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
         } else {

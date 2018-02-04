@@ -78,7 +78,9 @@ public class HomeActivity extends AppCompatActivity
         if (requestCode == REQUEST_ADD_NOTE) {
             // TODO: refactor
             try {
-                // TODO: resolve this warning
+                if (data.getExtras() == null || data.getExtras().getString("note") == null) {
+                    return;
+                }
                 Note note = Note.createFromString(data.getExtras().getString("note"));
                 if (note != null) {
                     this.storage.addNote(note);

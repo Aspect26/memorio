@@ -11,4 +11,6 @@
     <string name="add_note_add_button">Add</string>
     <string name="add_note_button_date">Date</string>
     <string name="add_note_button_time">Time</string>
+    <string name="note_time_remaining">Not specified</string>
+    <string name="note_text">Empty</string>
 </resources>

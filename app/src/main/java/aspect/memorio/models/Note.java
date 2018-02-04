@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class Note {
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MMMM-d-H-m-s");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("y-MMMM-d-H-m-s");
 
     private String text;
 
