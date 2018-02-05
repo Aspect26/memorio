@@ -17,6 +17,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.text.ParseException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import aspect.memorio.R;
 import aspect.memorio.activities.adapters.NotesListViewAdapter;
@@ -61,6 +63,8 @@ public class HomeActivity extends AppCompatActivity
         ListView notesListView = findViewById(R.id.list_notes);
         this.notesViewAdapter = new NotesListViewAdapter(this, this.storage.getAll());
         notesListView.setAdapter(this.notesViewAdapter);
+
+        this.setAutomaticUpdate();
     }
 
     @Override
@@ -144,6 +148,23 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void setAutomaticUpdate() {
+        final HomeActivity thisActivity = this;
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                thisActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        notesViewAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        };
+        timer.scheduleAtFixedRate(task, 1000 * 30, 1000 * 30);
     }
 
     private void goToNewNoteActivity() {
