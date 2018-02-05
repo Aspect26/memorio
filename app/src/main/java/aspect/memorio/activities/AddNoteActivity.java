@@ -13,11 +13,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
-import java.util.Date;
 import java.util.Calendar;
 
 import aspect.memorio.R;
-import aspect.memorio.models.Note;
+import aspect.memorio.models.Reminder;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -26,10 +25,10 @@ public class AddNoteActivity extends AppCompatActivity {
     private static final int DIALOG_CODE_DATE = 1;
     private static final int DIALOG_CODE_TIME = 2;
 
-    private final Note note;
+    private final Reminder note;
 
     public AddNoteActivity() {
-        note = new Note();
+        note = new Reminder();
     }
 
     @Override
@@ -72,22 +71,25 @@ public class AddNoteActivity extends AppCompatActivity {
             return new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    Date noteDate = (note.getDate() == null)? new Date() : note.getDate();
+                    Calendar noteDate = Calendar.getInstance();
+                    noteDate.setTimeInMillis((note.getDate() != null)? note.getDate().getTime() : System.currentTimeMillis());
 
-                    noteDate.setYear(year - 1900);
-                    noteDate.setMonth(month);
-                    noteDate.setDate(day);
-                    note.setDate(noteDate);
+                    noteDate.set(Calendar.YEAR, year);
+                    noteDate.set(Calendar.MONTH, month);
+                    noteDate.set(Calendar.DAY_OF_MONTH, day);
+                    note.setDate(noteDate.getTime());
                 }
             }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         } else if (id == DIALOG_CODE_TIME) {
             return new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                    Date noteDate = (note.getDate() == null)? new Date() : note.getDate();
-                    noteDate.setHours(hour);
-                    noteDate.setMinutes(minute);
-                    note.setDate(noteDate);
+                    Calendar noteTime = Calendar.getInstance();
+                    noteTime.setTimeInMillis((note.getDate() != null)? note.getDate().getTime() : System.currentTimeMillis());
+
+                    noteTime.set(Calendar.HOUR, hour);
+                    noteTime.set(Calendar.MINUTE, minute);
+                    note.setDate(noteTime.getTime());
                 }
             }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
         } else {

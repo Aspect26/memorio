@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Note {
+public class Reminder {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("y-MMMM-d-H-m-s");
 
@@ -15,13 +15,13 @@ public class Note {
 
     private Date notificationDate;
 
-    public Note(String text, Date date, Date notificationDate) {
+    public Reminder(String text, Date date, Date notificationDate) {
         this.text = text;
         this.date = date;
         this.notificationDate = notificationDate;
     }
 
-    public Note() {
+    public Reminder() {
         this("", null, null);
     }
 
@@ -60,7 +60,7 @@ public class Note {
         return stringBuilder.toString();
     }
 
-    public static Note createFromString(String line) throws ParseException {
+    public static Reminder createFromString(String line) throws ParseException {
         String[] data = line.split(";", -1);
         if (data.length != 3) {
             return null;
@@ -72,7 +72,7 @@ public class Note {
             Date date = (dateText != null && dateText.length() > 0)? DATE_FORMAT.parse(dateText) : null;
             Date notificationDate = (notificationDateText != null && notificationDateText.length() > 0)? DATE_FORMAT.parse(notificationDateText) : null;
 
-            return new Note(text, date, notificationDate);
+            return new Reminder(text, date, notificationDate);
         }
     }
 

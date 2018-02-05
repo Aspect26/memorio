@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <receiver android:name=".notifications.TodayTodoNotifications$AlarmReceiver"/>
+
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/app_name"

@@ -2,7 +2,7 @@ package aspect.memorio.storage;
 
 import java.util.List;
 
-import aspect.memorio.models.Note;
+import aspect.memorio.models.Reminder;
 
 public interface Storage {
 
@@ -13,21 +13,26 @@ public interface Storage {
     boolean loadAll();
 
     /**
-     * Gets all stored notes
+     * Gets all stored reminders
      */
-    List<Note> getAll();
+    List<Reminder> getAll();
+
+    /**
+     * Gets all reminders for today
+     */
+    List<Reminder> getAllToday();
 
     /**
      * Adds the specified note to the storage
      * @return true if successful, false otherwise
      */
-    void addNote(Note note);
+    void addReminder(Reminder reminder);
 
     /**
      * Removes the specified note from the storage
      * @return true if successful, false otherwise
      */
-    void removeNote(Note note);
+    void removeReminder(Reminder reminder);
 
     /**
      * Flushes all data

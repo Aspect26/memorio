@@ -22,7 +22,9 @@ import java.util.TimerTask;
 
 import aspect.memorio.R;
 import aspect.memorio.activities.adapters.NotesListViewAdapter;
-import aspect.memorio.models.Note;
+import aspect.memorio.models.Reminder;
+import aspect.memorio.notifications.NotificationsManager;
+import aspect.memorio.notifications.TodayTodoNotifications;
 import aspect.memorio.storage.DeviceFileStorage;
 import aspect.memorio.storage.Storage;
 
@@ -30,8 +32,10 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_ADD_NOTE = 1;
+
     private Storage storage;
-    private ArrayAdapter<Note> notesViewAdapter;
+    private NotificationsManager notificationsManager;
+    private ArrayAdapter<Reminder> notesViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class HomeActivity extends AppCompatActivity
         notesListView.setAdapter(this.notesViewAdapter);
 
         this.setAutomaticUpdate();
+
+        this.notificationsManager = new NotificationsManager(this);
     }
 
     @Override
@@ -91,9 +97,9 @@ public class HomeActivity extends AppCompatActivity
                 if (resultCode != RESULT_OK || data.getExtras() == null || data.getExtras().getString(AddNoteActivity.INTENT_NOTE) == null) {
                     return;
                 }
-                Note note = Note.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
+                Reminder note = Reminder.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
                 if (note != null) {
-                    this.storage.addNote(note);
+                    this.storage.addReminder(note);
                     this.storage.flushAll();
                     this.notesViewAdapter.notifyDataSetChanged();
                 }
@@ -168,7 +174,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void goToNewNoteActivity() {
-        Intent intent = new Intent(this, AddNoteActivity.class);
-        startActivityForResult(intent, REQUEST_ADD_NOTE);
+        new TodayTodoNotifications.AlarmReceiver().onReceive(this, null);
     }
+    
 }
