@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Note> {
 
     @Override
     @NonNull
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // TODO: refactor
         View view = convertView;
 
@@ -39,6 +38,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Note> {
             view = vi.inflate(R.layout.note_item, null);
         }
 
+        view.setVisibility(View.VISIBLE);
         Note note = getItem(position);
 
         if (note != null) {
@@ -46,39 +46,43 @@ public class NotesListViewAdapter extends ArrayAdapter<Note> {
             textView.setText(note.getText().isEmpty()? "Empty" : note.getText());
 
             textView = view.findViewById(R.id.note_remaining_time);
-            textView.setText(this.getNoteRemainingTimeText(note));
+            if (note.getDate() == null) {
+                textView.setText("Not specified");
+            } else {
+                long minutesRemaining = this.getNoteRemainingTime(note);
+                if (minutesRemaining < 0) {
+                    view.setVisibility(View.GONE);
+                }
+                textView.setText(this.getNoteRemainingTimeText(minutesRemaining));
+            }
         }
 
         return view;
     }
 
-    private String getNoteRemainingTimeText(Note note) {
+    private long getNoteRemainingTime(Note note) {
         Date noteDate = note.getDate();
-        if (noteDate == null) {
-            return "Not specified";
-        }
-
-        long diffInMinutes = (noteDate.getTime() - new Date().getTime()) / (1000 * 60);
-        if (diffInMinutes <= 0) {
-            return "Expired";
-        }
-
-        // TODO: refactor to some array or something
-        if (diffInMinutes >= MINUTES_OF_YEAR) {
-            return diffInMinutes / MINUTES_OF_YEAR + " year(s)";
-        } else if (diffInMinutes >= MINUTES_OF_MONTH) {
-            return diffInMinutes / MINUTES_OF_MONTH + " month(s)";
-        } else if (diffInMinutes >= MINUTES_OF_WEEK) {
-            return diffInMinutes / MINUTES_OF_WEEK + " week(s)";
-        } else if (diffInMinutes >= MINUTES_OF_DAY) {
-            return diffInMinutes / MINUTES_OF_DAY + " day(s)";
-        } else if (diffInMinutes >= MINUTES_OF_HOUR) {
-            return diffInMinutes / MINUTES_OF_HOUR + " hour(s)";
-        } else {
-            return diffInMinutes + " minute(s)";
-        }
-
+        return (noteDate.getTime() - new Date().getTime()) / (1000 * 60);
     }
 
+    private String getNoteRemainingTimeText(long minutesRemaining) {
+        if (minutesRemaining == 0) {
+            return "Now";
+        }
+
+        if (minutesRemaining >= MINUTES_OF_YEAR) {
+            return minutesRemaining / MINUTES_OF_YEAR + " year(s)";
+        } else if (minutesRemaining >= MINUTES_OF_MONTH) {
+            return minutesRemaining / MINUTES_OF_MONTH + " month(s)";
+        } else if (minutesRemaining >= MINUTES_OF_WEEK) {
+            return minutesRemaining / MINUTES_OF_WEEK + " week(s)";
+        } else if (minutesRemaining >= MINUTES_OF_DAY) {
+            return minutesRemaining / MINUTES_OF_DAY + " day(s)";
+        } else if (minutesRemaining >= MINUTES_OF_HOUR) {
+            return minutesRemaining / MINUTES_OF_HOUR + " hour(s)";
+        } else {
+            return minutesRemaining + " minute(s)";
+        }
+    }
 
 }
