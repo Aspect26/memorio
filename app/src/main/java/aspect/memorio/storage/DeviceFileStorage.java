@@ -82,6 +82,29 @@ public class DeviceFileStorage implements Storage {
     }
 
     @Override
+    public List<Reminder> getAllNonExpired() {
+        List<Reminder> nonExpiredReminders = new ArrayList<>();
+        for (Reminder reminder : this.data) {
+            if (reminder.getDate() == null) {
+                nonExpiredReminders.add(reminder);
+                continue;
+            }
+
+            Calendar now = Calendar.getInstance();
+            now.setTimeInMillis(System.currentTimeMillis());
+
+            Calendar noteCalendarDate = Calendar.getInstance();
+            noteCalendarDate.setTimeInMillis(reminder.getDate().getTime());
+
+            if (noteCalendarDate.after(now)) {
+                nonExpiredReminders.add(reminder);
+            }
+        }
+
+        return nonExpiredReminders;
+    }
+
+    @Override
     public void addReminder(Reminder reminder) {
         this.data.add(reminder);
     }

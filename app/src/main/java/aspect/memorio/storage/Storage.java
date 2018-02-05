@@ -23,6 +23,11 @@ public interface Storage {
     List<Reminder> getAllToday();
 
     /**
+     * Gets all reminders that are not expired
+     */
+    List<Reminder> getAllNonExpired();
+
+    /**
      * Adds the specified note to the storage
      * @return true if successful, false otherwise
      */
