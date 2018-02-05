@@ -17,12 +17,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import aspect.memorio.R;
 import aspect.memorio.activities.adapters.NotesListViewAdapter;
-import aspect.memorio.models.Note;
+import aspect.memorio.models.Reminder;
+import aspect.memorio.notifications.NotificationsManager;
 import aspect.memorio.storage.DeviceFileStorage;
 import aspect.memorio.storage.Storage;
 
@@ -30,8 +35,10 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int REQUEST_ADD_NOTE = 1;
+
     private Storage storage;
-    private ArrayAdapter<Note> notesViewAdapter;
+    private NotificationsManager notificationsManager;
+    private ArrayAdapter<Reminder> notesViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +72,14 @@ public class HomeActivity extends AppCompatActivity
         notesListView.setAdapter(this.notesViewAdapter);
 
         this.setAutomaticUpdate();
+
+        this.notificationsManager = new NotificationsManager(this);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        this.notesViewAdapter.notifyDataSetChanged();
+        this.reinitializeRemindersView();
     }
 
     @Override
@@ -91,9 +100,9 @@ public class HomeActivity extends AppCompatActivity
                 if (resultCode != RESULT_OK || data.getExtras() == null || data.getExtras().getString(AddNoteActivity.INTENT_NOTE) == null) {
                     return;
                 }
-                Note note = Note.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
+                Reminder note = Reminder.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
                 if (note != null) {
-                    this.storage.addNote(note);
+                    this.storage.addReminder(note);
                     this.storage.flushAll();
                     this.notesViewAdapter.notifyDataSetChanged();
                 }
@@ -150,6 +159,28 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    private void reinitializeRemindersView() {
+        List<Reminder> reminders = this.storage.getAllNonExpired();
+
+        Collections.sort(reminders, new Comparator<Reminder>() {
+            @Override
+            public int compare(Reminder left, Reminder right) {
+                if (left.getDate() == null && right.getDate() == null) {
+                    return 0;
+                } else if (left.getDate() == null) {
+                    return -1;
+                } else if (right.getDate() == null) {
+                    return 1;
+                }
+                return (int) (left.getDate().getTime() / 60000) - (int) (right.getDate().getTime() / 60000);
+            }
+        });
+
+        this.notesViewAdapter.clear();
+        this.notesViewAdapter.addAll(reminders);
+        this.notesViewAdapter.notifyDataSetChanged();
+    }
+
     private void setAutomaticUpdate() {
         final HomeActivity thisActivity = this;
         Timer timer = new Timer();
@@ -159,7 +190,7 @@ public class HomeActivity extends AppCompatActivity
                 thisActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        notesViewAdapter.notifyDataSetChanged();
+                        reinitializeRemindersView();
                     }
                 });
             }
@@ -171,4 +202,5 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = new Intent(this, AddNoteActivity.class);
         startActivityForResult(intent, REQUEST_ADD_NOTE);
     }
+    
 }
