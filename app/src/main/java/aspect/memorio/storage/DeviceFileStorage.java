@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -27,11 +28,12 @@ public class DeviceFileStorage implements Storage {
 
     @Override
     public boolean loadAll() {
+        File file = new File(context.getFilesDir(), FILE_NAME);
         FileInputStream inputStream;
         BufferedReader reader;
 
         try {
-            inputStream = context.openFileInput(FILE_NAME);
+            inputStream = new FileInputStream(file);
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line = reader.readLine();
             this.data.clear();
@@ -41,6 +43,7 @@ public class DeviceFileStorage implements Storage {
                 if (note != null) {
                     this.data.add(note);
                 }
+                line = reader.readLine();
             }
 
             inputStream.close();
@@ -69,16 +72,16 @@ public class DeviceFileStorage implements Storage {
     @Override
     public void flushAll() {
         FileOutputStream outputStream;
-        BufferedWriter writer;
 
         try {
-            outputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
-            writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+            File file = new File(context.getFilesDir(), FILE_NAME);
+            outputStream = new FileOutputStream(file);
 
             for (Note note : this.data) {
-                writer.write(note.toString());
-                writer.newLine();
+                outputStream.write(note.toString().getBytes());
+                outputStream.write("\n".getBytes());
             }
+            outputStream.close();
         } catch (Exception e) {
             Log.d("[DeviceFileStorage]", e.getMessage());
         }
