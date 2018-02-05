@@ -11,8 +11,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import aspect.memorio.models.Reminder;
 
