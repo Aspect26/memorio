@@ -41,6 +41,7 @@ public class DeviceFileStorage implements Storage {
                 if (note != null) {
                     this.data.add(note);
                 }
+                line = reader.readLine();
             }
 
             inputStream.close();
