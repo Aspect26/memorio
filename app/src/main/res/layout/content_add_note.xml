@@ -11,33 +11,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:orientation="vertical" >
 
         <EditText
             android:id="@+id/edit_text_new_note_text"
             android:layout_width="match_parent"
-            android:layout_height="145dp"
+            android:layout_height="80dp"
             android:hint="@string/add_note_text" />
 
-        <Button
-            android:id="@+id/button_add_note_date"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_note_button_date" />
+            android:padding="20dp"
+            android:paddingLeft="50dp"
+            android:paddingStart="50dp"
+            android:paddingRight="50dp"
+            android:paddingEnd="50dp">
 
-        <Button
-            android:id="@+id/button_add_note_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_note_button_time" />
+            <Button
+                android:id="@+id/button_add_note_date"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_calendar"
+                style="@style/ImageButton" />
 
-        <Button
-            android:id="@+id/button_save_new_note"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_note_add_button" />
+            <Button
+                android:id="@+id/button_add_note_time"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ic_time"
+                style="@style/ImageButton" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

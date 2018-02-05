@@ -21,8 +21,11 @@ import aspect.memorio.models.Note;
 
 public class AddNoteActivity extends AppCompatActivity {
 
+    public static final String INTENT_NOTE = "note";
+
     private static final int DIALOG_CODE_DATE = 1;
     private static final int DIALOG_CODE_TIME = 2;
+
     private final Note note;
 
     public AddNoteActivity() {
@@ -36,7 +39,7 @@ public class AddNoteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button addButton = findViewById(R.id.button_save_new_note);
+        Button addButton = findViewById(R.id.button_done);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +52,14 @@ public class AddNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 showDialog(DIALOG_CODE_DATE);
+            }
+        });
+
+        Button timeButton = findViewById(R.id.button_add_note_time);
+        timeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(DIALOG_CODE_TIME);
             }
         });
     }
@@ -89,8 +100,7 @@ public class AddNoteActivity extends AppCompatActivity {
         note.setText(text);
 
         Intent intent = new Intent();
-        // TODO: use constant omg
-        intent.putExtra("note", note.toString());
+        intent.putExtra(INTENT_NOTE, note.toString());
         setResult(RESULT_OK, intent);
         finish();
     }
