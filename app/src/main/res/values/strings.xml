@@ -17,6 +17,9 @@
     <string name="add_note_button_date">Date</string>
     <string name="add_note_button_time">Time</string>
 
+    <string name="about_made_by">Made by: Julius Flimmel</string>
+    <string name="about_contact">Contact: flimmelj@gmail.com</string>
+
     <string name="note_time_remaining">Not specified</string>
     <string name="note_text">Empty</string>
 
