@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 import aspect.memorio.R;
-import aspect.memorio.activities.HomeActivity;
+import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.storage.Storage;
 
@@ -26,12 +26,12 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
     private static final int MINUTES_OF_HOUR = 60;
 
     private final Storage storage;
-    private final HomeActivity homeActivity;
+    private final ListRemindersFragment remindersFragment;
 
-    public NotesListViewAdapter(HomeActivity homeActivity, List<Reminder> items, final Storage storage) {
-        super(homeActivity, R.layout.note_item, items);
+    public NotesListViewAdapter(Context context, List<Reminder> items, final Storage storage, ListRemindersFragment remindersFragment) {
+        super(context, R.layout.note_item, items);
         this.storage = storage;
-        this.homeActivity = homeActivity;
+        this.remindersFragment = remindersFragment;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             @Override
             public void onClick(final View view) {
                 view.setAlpha(1.0f);
-                homeActivity.removeReminder(reminder);
+                remindersFragment.removeReminder(reminder);
             }
         });
     }
