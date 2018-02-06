@@ -40,6 +40,11 @@ public interface Storage {
     void removeReminder(Reminder reminder);
 
     /**
+     * Removes all reminders of the user
+     */
+    void removeAllReminders();
+
+    /**
      * Flushes all data
      * @return true if successful, false otherwise
      */

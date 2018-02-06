@@ -124,7 +124,10 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_remove_all) {
+            this.storage.removeAllReminders();
+            this.storage.flushAll();
+            this.reinitializeRemindersView();
             return true;
         }
 

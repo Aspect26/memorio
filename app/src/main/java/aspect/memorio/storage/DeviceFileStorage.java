@@ -113,6 +113,11 @@ public class DeviceFileStorage implements Storage {
     }
 
     @Override
+    public void removeAllReminders() {
+        this.data.clear();
+    }
+
+    @Override
     public void flushAll() {
         FileOutputStream outputStream;
 
