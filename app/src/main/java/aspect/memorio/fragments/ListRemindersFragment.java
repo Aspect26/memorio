@@ -35,13 +35,17 @@ public class ListRemindersFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // TODO: refactor
         super.onCreate(savedInstanceState);
-        View view = getView();
-        if (view == null) {
-            return;
-        }
+    }
 
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: refactor
+        View view = inflater.inflate(R.layout.fragment_list_reminders, container, false);
         FloatingActionButton fab = view.findViewById(R.id.button_add_note);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,19 +61,14 @@ public class ListRemindersFragment extends Fragment {
         this.setAutomaticUpdate();
 
         this.homeActivity = (HomeActivity) getActivity();
-    }
 
-    public void setStorage(Storage storage) {
-        this.storage = storage;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list_reminders, container, false);
+        return view;
     }
 
     private void reinitializeRemindersView() {
+        if (this.storage == null) {
+            return;
+        }
         List<Reminder> reminders = this.storage.getAllNonExpired();
 
         Collections.sort(reminders, new Comparator<Reminder>() {
@@ -135,7 +134,7 @@ public class ListRemindersFragment extends Fragment {
         storage.removeReminder(reminder);
         this.reinitializeRemindersView();
 
-        Snackbar undoSnackBar = Snackbar.make(getView().findViewById(R.id.content_home), R.string.snackbar_reminder_removed, Snackbar.LENGTH_LONG);
+        Snackbar undoSnackBar = Snackbar.make(getView(), R.string.snackbar_reminder_removed, Snackbar.LENGTH_LONG);
         undoSnackBar.setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

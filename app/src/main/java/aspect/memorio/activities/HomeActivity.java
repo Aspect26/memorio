@@ -109,5 +109,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void addReminderNotification(Reminder reminder) {
         this.notificationsManager.addReminderNotification(reminder);
     }
-    
+
+    public Storage getStorage() {
+        return this.storage;
+    }
 }

@@ -10,9 +10,13 @@ import aspect.memorio.fragments.ListRemindersFragment;
 public class HomeActivityFragmentManager {
 
     private final HomeActivity homeActivity;
+    private final ListRemindersFragment listRemindersFragment;
 
     public HomeActivityFragmentManager(HomeActivity homeActivity) {
         this.homeActivity = homeActivity;
+
+        this.listRemindersFragment = new ListRemindersFragment();
+        this.listRemindersFragment.setStorage(homeActivity.getStorage());
     }
 
     public enum FragmentType {
@@ -35,12 +39,11 @@ public class HomeActivityFragmentManager {
     }
 
     private Fragment getFragmentInstance(FragmentType type) {
-        // TODO: singletons!!!
         switch (type) {
             case REMINDERS_LIST:
-                return new ListRemindersFragment();
+                return this.listRemindersFragment;
             default:
-                return new ListRemindersFragment();
+                return this.listRemindersFragment;
         }
     }
 }
