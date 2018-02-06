@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import aspect.memorio.R;
+import aspect.memorio.fragments.managers.HomeActivityFragmentManager;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.notifications.NotificationsManager;
 import aspect.memorio.storage.DeviceFileStorage;
@@ -90,15 +91,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_reminders) {
-            // Handle the camera action
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.REMINDERS_LIST);
         } else if (id == R.id.nav_calendar) {
-
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.CALENDAR_VIEW);
         } else if (id == R.id.nav_settings) {
-
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.PREFERENCES);
         } else if (id == R.id.nav_about) {
-
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.ABOUT);
         } else if (id == R.id.nav_help) {
-
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.HELP);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
