@@ -2,49 +2,19 @@ package aspect.memorio.notifications;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import java.util.Calendar;
-import java.util.List;
 
 import aspect.memorio.activities.HomeActivity;
-import aspect.memorio.models.Reminder;
-import aspect.memorio.storage.DeviceFileStorage;
-import aspect.memorio.storage.Storage;
 
 import static android.content.Context.ALARM_SERVICE;
+import static aspect.memorio.notifications.NotificationsManager.DAILY_REQUEST_CODE;
 
 public class TodayTodoNotifications {
-
-    public static class AlarmReceiver extends BroadcastReceiver {
-        String TAG = "AlarmReceiver";
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            final Storage storage = new DeviceFileStorage(context);
-            storage.loadAll();
-            final List<Reminder> todayReminders = storage.getAllToday();
-            if (todayReminders.size() == 0) {
-                return;
-            }
-            final String text = this.getNotificationText(todayReminders);
-            NotificationsManager.showNotification(context, "You have " + todayReminders.size() + " reminders today", text);
-        }
-
-        private String getNotificationText(List<Reminder> reminders) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (Reminder note : reminders) {
-                stringBuilder.append(String.format("REMINDER: %s\n", note.getText()));
-            }
-            return stringBuilder.toString();
-        }
-    }
-
-    private static int REQUEST_CODE = 1;
 
     private final NotificationsManager notificationsManager;
 
@@ -105,7 +75,8 @@ public class TodayTodoNotifications {
 
     private PendingIntent createPendingIntent(Context context) {
         Intent intent = new Intent(context, AlarmReceiver.class);
-        return PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.putExtra("type", "daily");
+        return PendingIntent.getBroadcast(context, DAILY_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void setAlarm(HomeActivity homeActivity, Calendar time, PendingIntent intent) {

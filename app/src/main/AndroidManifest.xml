@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <receiver android:name=".notifications.TodayTodoNotifications$AlarmReceiver"/>
+        <receiver android:name=".notifications.AlarmReceiver"/>
 
         <activity
             android:name=".activities.HomeActivity"

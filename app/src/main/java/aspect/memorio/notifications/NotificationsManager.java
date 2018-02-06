@@ -1,5 +1,6 @@
 package aspect.memorio.notifications;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,12 +8,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.Calendar;
+
 import aspect.memorio.activities.HomeActivity;
 import aspect.memorio.R;
+import aspect.memorio.models.Reminder;
 
+import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 public class NotificationsManager {
+
+    static final int DAILY_REQUEST_CODE = 1;
+    private static final int REMINDER_REQUEST_CODE = 2;
 
     private final HomeActivity homeActivity;
 
@@ -32,6 +40,26 @@ public class NotificationsManager {
 
     public void showNotification(final String title, final String text) {
         showNotification(this.homeActivity, title, text);
+    }
+
+    public void addReminderNotification(Reminder reminder) {
+        if (reminder.getDate() == null) {
+            return;
+        }
+
+        Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(reminder.getDate().getTime());
+        time.add(Calendar.HOUR, -1);
+
+        Intent intent = new Intent(this.homeActivity, AlarmReceiver.class);
+        intent.putExtra("type", "reminder");
+        intent.putExtra("text", reminder.getText());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.homeActivity, REMINDER_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) homeActivity.getSystemService(ALARM_SERVICE);
+        if (alarmManager != null) {
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time.getTimeInMillis(), pendingIntent);
+        }
     }
 
     private static Notification createNotification(final Context context, final String title, final String text) {

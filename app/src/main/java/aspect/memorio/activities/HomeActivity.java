@@ -17,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -100,11 +99,9 @@ public class HomeActivity extends AppCompatActivity
                 if (resultCode != RESULT_OK || data.getExtras() == null || data.getExtras().getString(AddNoteActivity.INTENT_NOTE) == null) {
                     return;
                 }
-                Reminder note = Reminder.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
-                if (note != null) {
-                    this.storage.addReminder(note);
-                    this.storage.flushAll();
-                    this.notesViewAdapter.notifyDataSetChanged();
+                Reminder reminder = Reminder.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
+                if (reminder != null) {
+                    this.addReminder(reminder);
                 }
             } catch (ParseException e) {
                 return;
@@ -196,6 +193,13 @@ public class HomeActivity extends AppCompatActivity
             }
         };
         timer.scheduleAtFixedRate(task, 1000 * 30, 1000 * 30);
+    }
+
+    private void addReminder(Reminder reminder) {
+        this.storage.addReminder(reminder);
+        this.storage.flushAll();
+        this.notesViewAdapter.notifyDataSetChanged();
+        this.notificationsManager.addReminderNotification(reminder);
     }
 
     private void goToNewNoteActivity() {
