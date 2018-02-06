@@ -6,13 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.Date;
 import java.util.List;
 
 import aspect.memorio.R;
+import aspect.memorio.activities.HomeActivity;
 import aspect.memorio.models.Reminder;
+import aspect.memorio.storage.Storage;
 
 public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
 
@@ -22,8 +25,13 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
     private static final int MINUTES_OF_DAY = 60 * 24;
     private static final int MINUTES_OF_HOUR = 60;
 
-    public NotesListViewAdapter(Context context, List<Reminder> items) {
-        super(context, R.layout.note_item, items);
+    private final Storage storage;
+    private final HomeActivity homeActivity;
+
+    public NotesListViewAdapter(HomeActivity homeActivity, List<Reminder> items, final Storage storage) {
+        super(homeActivity, R.layout.note_item, items);
+        this.storage = storage;
+        this.homeActivity = homeActivity;
     }
 
     @Override
@@ -38,22 +46,36 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             view = vi.inflate(R.layout.note_item, null);
         }
 
-        Reminder note = getItem(position);
+        Reminder reminder = getItem(position);
 
-        if (note != null) {
+        if (reminder != null) {
             TextView textView = view.findViewById(R.id.note_text);
-            textView.setText(note.getText().isEmpty()? "Empty" : note.getText());
+            textView.setText(reminder.getText().isEmpty()? "Empty" : reminder.getText());
 
             textView = view.findViewById(R.id.note_remaining_time);
-            if (note.getDate() == null) {
+            if (reminder.getDate() == null) {
                 textView.setText("Not specified");
             } else {
-                long minutesRemaining = this.getNoteRemainingTime(note);
+                long minutesRemaining = this.getNoteRemainingTime(reminder);
                 textView.setText(this.getNoteRemainingTimeText(minutesRemaining));
             }
+
+            Button removeButton = view.findViewById(R.id.button_delete_reminder);
+            removeButton.setAlpha(0.5f);
+            setRemoveButtonAction(removeButton, reminder);
         }
 
         return view;
+    }
+
+    private void setRemoveButtonAction(Button button, final Reminder reminder) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                view.setAlpha(1.0f);
+                homeActivity.removeReminder(reminder);
+            }
+        });
     }
 
     private long getNoteRemainingTime(Reminder note) {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,6 +42,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO: refactor
         super.onCreate(savedInstanceState);
         this.storage = new DeviceFileStorage(this);
         this.storage.loadAll();
@@ -67,7 +69,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         ListView notesListView = findViewById(R.id.list_notes);
-        this.notesViewAdapter = new NotesListViewAdapter(this, this.storage.getAll());
+        this.notesViewAdapter = new NotesListViewAdapter(this, this.storage.getAll(), this.storage);
         notesListView.setAdapter(this.notesViewAdapter);
 
         this.setAutomaticUpdate();
@@ -155,6 +157,22 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void removeReminder(final Reminder reminder) {
+        storage.removeReminder(reminder);
+        this.reinitializeRemindersView();
+
+        Snackbar undoSnackBar = Snackbar.make(findViewById(R.id.content_home), R.string.snackbar_reminder_removed, Snackbar.LENGTH_LONG);
+        undoSnackBar.setAction(R.string.undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                storage.addReminder(reminder);
+                reinitializeRemindersView();
+            }
+        });
+        undoSnackBar.setActionTextColor(getResources().getColor(R.color.colorPrimaryLight));
+        undoSnackBar.show();
     }
 
     private void reinitializeRemindersView() {

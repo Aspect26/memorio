@@ -18,7 +18,10 @@
 
     <string name="note_time_remaining">Not specified</string>
     <string name="note_text">Empty</string>
-    
+
+    <string name="snackbar_reminder_removed">Reminder removed</string>
+
     <string name="done">Done</string>
+    <string name="undo">Undo</string>
 
 </resources>
