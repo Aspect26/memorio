@@ -34,12 +34,12 @@ public class AlarmReceiver extends BroadcastReceiver {
             return;
         }
         final String text = this.getDailyNotificationText(todayReminders);
-        NotificationsManager.showNotification(context, "You have " + todayReminders.size() + " reminders today", text);
+        NotificationsManager.showNotification(context, "You have " + todayReminders.size() + " reminders today", text, false);
     }
 
     private void showReminderNotification(Context context, Intent intent) {
         String notificationText = intent.getStringExtra("text");
-        NotificationsManager.showNotification(context, "Reminder!", notificationText);
+        NotificationsManager.showNotification(context, "Reminder!", notificationText, true);
     }
 
     private String getDailyNotificationText(List<Reminder> reminders) {

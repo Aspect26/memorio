@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.Calendar;
@@ -33,13 +34,13 @@ public class NotificationsManager {
         return this.homeActivity;
     }
 
-    public static void showNotification(final Context context, final String title, final String text) {
-        Notification notification = createNotification(context, title, text);
+    public static void showNotification(final Context context, final String title, final String text, final boolean vibrate) {
+        Notification notification = createNotification(context, title, text, vibrate);
         showNotification(context, notification);
     }
 
-    public void showNotification(final String title, final String text) {
-        showNotification(this.homeActivity, title, text);
+    public void showNotification(final String title, final String text, final boolean vibrate) {
+        showNotification(this.homeActivity, title, text, vibrate);
     }
 
     public void addReminderNotification(Reminder reminder) {
@@ -62,11 +63,11 @@ public class NotificationsManager {
         }
     }
 
-    private static Notification createNotification(final Context context, final String title, final String text) {
+    private static Notification createNotification(final Context context, final String title, final String text, final boolean vibrate) {
         Intent intent = new Intent(context, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
-        Notification notification = new NotificationCompat.Builder(context, "channel")
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "channel")
                 .setContentTitle(title)
                 .setContentText(text)
                 .setSmallIcon(R.drawable.app_icon)
@@ -74,7 +75,14 @@ public class NotificationsManager {
                 .setStyle(
                         new NotificationCompat.BigTextStyle()
                         .bigText(text))
-                .build();
+                // TODO: get this from colors.xml
+                .setLights(4128899, 3000, 3000);
+
+        if (vibrate) {
+            notificationBuilder.setVibrate(new long[] { 1000, 1000, 1000 });
+        }
+
+        Notification notification = notificationBuilder.build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         return notification;
