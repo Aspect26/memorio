@@ -124,7 +124,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             }
         }
 
-        return minutesRemaining + " minute(s)";
+        return minutesRemaining + " " + measurements.get(measurements.size() - 1).label + "(s)";
     }
 
 }
