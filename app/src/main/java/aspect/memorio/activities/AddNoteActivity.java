@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import java.text.ParseException;
 import java.util.Calendar;
 
 import aspect.memorio.R;
@@ -20,23 +21,31 @@ import aspect.memorio.models.Reminder;
 
 public class AddNoteActivity extends AppCompatActivity {
 
-    public static final String INTENT_NOTE = "note";
+    public static final String RESULT_INTENT_NOTE = "reminder";
+    public static final String INPUT_INTENT_NOTE = "input";
 
     private static final int DIALOG_CODE_DATE = 1;
     private static final int DIALOG_CODE_TIME = 2;
 
-    private final Reminder note;
+    private Reminder reminder;
 
     public AddNoteActivity() {
-        note = new Reminder();
+        reminder = new Reminder();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // TODO: refactor this method
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_note);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (getIntent()!= null) {
+            String inputReminderString = getIntent().getStringExtra(INPUT_INTENT_NOTE);
+            this.setReminder(inputReminderString);
+        }
 
         Button addButton = findViewById(R.id.button_done);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -61,48 +70,64 @@ public class AddNoteActivity extends AppCompatActivity {
                 showDialog(DIALOG_CODE_TIME);
             }
         });
+
+        EditText textEditor = findViewById(R.id.edit_text_new_note_text);
+        textEditor.setText(this.reminder != null? this.reminder.getText() : "");
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        Calendar calendar = Calendar.getInstance();
+        Calendar defaultTime = Calendar.getInstance();
+        if (reminder.getDate() != null) {
+            defaultTime.setTimeInMillis(reminder.getDate().getTime());
+        }
 
         if (id == DIALOG_CODE_DATE) {
             return new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                     Calendar noteDate = Calendar.getInstance();
-                    noteDate.setTimeInMillis((note.getDate() != null)? note.getDate().getTime() : System.currentTimeMillis());
+                    noteDate.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
 
                     noteDate.set(Calendar.YEAR, year);
                     noteDate.set(Calendar.MONTH, month);
                     noteDate.set(Calendar.DAY_OF_MONTH, day);
-                    note.setDate(noteDate.getTime());
+                    reminder.setDate(noteDate.getTime());
                 }
-            }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            }, defaultTime.get(Calendar.YEAR), defaultTime.get(Calendar.MONTH), defaultTime.get(Calendar.DAY_OF_MONTH));
         } else if (id == DIALOG_CODE_TIME) {
             return new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int hour, int minute) {
                     Calendar noteTime = Calendar.getInstance();
-                    noteTime.setTimeInMillis((note.getDate() != null)? note.getDate().getTime() : System.currentTimeMillis());
+                    noteTime.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
 
                     noteTime.set(Calendar.HOUR, hour);
                     noteTime.set(Calendar.MINUTE, minute);
-                    note.setDate(noteTime.getTime());
+                    reminder.setDate(noteTime.getTime());
                 }
-            }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), true);
+            }, defaultTime.get(Calendar.HOUR), defaultTime.get(Calendar.MINUTE), true);
         } else {
             return null;
         }
     }
 
+    private void setReminder(String reminderString) {
+        if (reminderString != null) {
+            try {
+                this.reminder = Reminder.createFromString(reminderString);
+            } catch (ParseException ignored) {
+
+            }
+        }
+    }
+
     private void saveNoteAndExit() {
         final String text = ((EditText) findViewById(R.id.edit_text_new_note_text)).getText().toString();
-        note.setText(text);
+        reminder.setText(text);
 
         Intent intent = new Intent();
-        intent.putExtra(INTENT_NOTE, note.toString());
+        intent.putExtra(RESULT_INTENT_NOTE, reminder.toString());
         setResult(RESULT_OK, intent);
         finish();
     }

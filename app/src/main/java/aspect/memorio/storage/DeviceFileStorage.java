@@ -108,6 +108,18 @@ public class DeviceFileStorage implements Storage {
     }
 
     @Override
+    public void updateOrAddReminder(Reminder updatedReminder) {
+        Reminder oldReminder = this.findReminder(updatedReminder.getId());
+        if (oldReminder == null) {
+            this.addReminder(updatedReminder);
+        } else {
+            oldReminder.setDate(updatedReminder.getDate());
+            oldReminder.setNotificationDate(updatedReminder.getNotificationDate());
+            oldReminder.setText(updatedReminder.getText());
+        }
+    }
+
+    @Override
     public void removeReminder(Reminder reminder) {
         this.data.remove(reminder);
     }
@@ -133,5 +145,15 @@ public class DeviceFileStorage implements Storage {
         } catch (Exception e) {
             Log.d("[DeviceFileStorage]", e.getMessage());
         }
+    }
+
+    private Reminder findReminder(String id) {
+        for (Reminder reminder : this.data) {
+            if (reminder.getId().equals(id)) {
+                return reminder;
+            }
+        }
+
+        return null;
     }
 }

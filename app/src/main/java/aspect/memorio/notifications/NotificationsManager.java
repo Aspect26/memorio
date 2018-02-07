@@ -47,7 +47,7 @@ public class NotificationsManager {
         showNotification(this.homeActivity, title, text, vibrate, number);
     }
 
-    public void addReminderNotification(Reminder reminder) {
+    public void addOrUpdateReminderNotification(Reminder reminder) {
         if (reminder.getDate() == null) {
             return;
         }
@@ -59,7 +59,7 @@ public class NotificationsManager {
         Intent intent = new Intent(this.homeActivity, AlarmReceiver.class);
         intent.putExtra("type", "reminder");
         intent.putExtra("text", reminder.getText());
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.homeActivity, REMINDER_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this.homeActivity, reminder.getId().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager) homeActivity.getSystemService(ALARM_SERVICE);
         if (alarmManager != null) {

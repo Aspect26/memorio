@@ -20,8 +20,6 @@ import aspect.memorio.storage.Storage;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final int REQUEST_ADD_NOTE = 1;
-
     private Storage storage;
     private NotificationsManager notificationsManager;
     private HomeActivityFragmentManager fragmentManager;
@@ -68,19 +66,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_remove_all) {
-            // TODO: reimplement this
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -107,8 +97,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void addReminderNotification(Reminder reminder) {
-        this.notificationsManager.addReminderNotification(reminder);
+    public void addOrUpdateReminderNotification(Reminder reminder) {
+        this.notificationsManager.addOrUpdateReminderNotification(reminder);
     }
 
     public Storage getStorage() {

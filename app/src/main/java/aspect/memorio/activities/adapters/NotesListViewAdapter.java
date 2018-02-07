@@ -84,6 +84,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             Button removeButton = view.findViewById(R.id.button_delete_reminder);
             removeButton.setAlpha(0.5f);
             setRemoveButtonAction(removeButton, reminder);
+            setOnClickListener(view, reminder);
         }
 
         return view;
@@ -95,6 +96,15 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             public void onClick(final View view) {
                 view.setAlpha(1.0f);
                 remindersFragment.removeReminder(reminder);
+            }
+        });
+    }
+
+    private void setOnClickListener(View itemView, final Reminder reminder) {
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                remindersFragment.editReminder(reminder);
             }
         });
     }

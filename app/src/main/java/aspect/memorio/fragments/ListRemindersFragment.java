@@ -29,6 +29,9 @@ import static android.app.Activity.RESULT_OK;
 
 public class ListRemindersFragment extends Fragment {
 
+    public static final int REQUEST_ADD_NOTE = 1;
+    public static final int REQUEST_EDIT_NOTE = 2;
+
     private ArrayAdapter<Reminder> notesViewAdapter;
     private Storage storage;
     private HomeActivity homeActivity;
@@ -98,20 +101,26 @@ public class ListRemindersFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == HomeActivity.REQUEST_ADD_NOTE) {
-            // TODO: refactor
+        // TODO: refactor this method
+        if (requestCode == REQUEST_ADD_NOTE || requestCode == REQUEST_EDIT_NOTE) {
             try {
-                if (resultCode != RESULT_OK || data.getExtras() == null || data.getExtras().getString(AddNoteActivity.INTENT_NOTE) == null) {
+                if (resultCode != RESULT_OK || data.getExtras() == null || data.getExtras().getString(AddNoteActivity.RESULT_INTENT_NOTE) == null) {
                     return;
                 }
-                Reminder reminder = Reminder.createFromString(data.getExtras().getString(AddNoteActivity.INTENT_NOTE));
-                if (reminder != null) {
+                Reminder reminder = Reminder.createFromString(data.getExtras().getString(AddNoteActivity.RESULT_INTENT_NOTE));
+                if (requestCode == REQUEST_ADD_NOTE) {
                     this.addReminder(reminder);
+                } else {
+                    this.updateReminder(reminder);
                 }
             } catch (ParseException e) {
                 return;
             }
         }
+    }
+
+    public void editReminder(Reminder reminder) {
+        this.gotoEditNoteActivity(reminder);
     }
 
     private void setAutomaticUpdate() {
@@ -149,13 +158,26 @@ public class ListRemindersFragment extends Fragment {
     private void addReminder(Reminder reminder) {
         this.storage.addReminder(reminder);
         this.storage.flushAll();
-        this.notesViewAdapter.notifyDataSetChanged();
-        homeActivity.addReminderNotification(reminder);
+        this.reinitializeRemindersView();
+        homeActivity.addOrUpdateReminderNotification(reminder);
+    }
+
+    private void updateReminder(Reminder reminder) {
+        this.storage.updateOrAddReminder(reminder);
+        this.storage.flushAll();
+        this.reinitializeRemindersView();
+        homeActivity.addOrUpdateReminderNotification(reminder);
+    }
+
+    private void gotoEditNoteActivity(Reminder reminder) {
+        Intent intent = new Intent(homeActivity, AddNoteActivity.class);
+        intent.putExtra(AddNoteActivity.INPUT_INTENT_NOTE, reminder.toString());
+        startActivityForResult(intent, REQUEST_EDIT_NOTE);
     }
 
     private void goToNewNoteActivity() {
         Intent intent = new Intent(homeActivity, AddNoteActivity.class);
-        startActivityForResult(intent, HomeActivity.REQUEST_ADD_NOTE);
+        startActivityForResult(intent, REQUEST_ADD_NOTE);
     }
 
 }
