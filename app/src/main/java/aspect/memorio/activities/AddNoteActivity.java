@@ -102,11 +102,11 @@ public class AddNoteActivity extends AppCompatActivity {
                     Calendar noteTime = Calendar.getInstance();
                     noteTime.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
 
-                    noteTime.set(Calendar.HOUR, hour);
+                    noteTime.set(Calendar.HOUR_OF_DAY, hour);
                     noteTime.set(Calendar.MINUTE, minute);
                     reminder.setDate(noteTime.getTime());
                 }
-            }, defaultTime.get(Calendar.HOUR), defaultTime.get(Calendar.MINUTE), true);
+            }, defaultTime.get(Calendar.HOUR_OF_DAY), defaultTime.get(Calendar.MINUTE), true);
         } else {
             return null;
         }

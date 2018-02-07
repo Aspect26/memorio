@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Memorio</string>
     <string name="app_name_develop">Memorio develop</string>
-    <string name="app_version">0.9.2:34</string>
-    <string name="app_version_long">Version: Beta 2 (0.9.2:34)</string>
+    <string name="app_version">0.9.2:40</string>
+    <string name="app_version_long">Version: Beta 2 (0.9.2:40)</string>
     <string name="app_email">flimmelj@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
