@@ -77,6 +77,11 @@ public class ListRemindersFragment extends Fragment {
         Collections.sort(reminders, new Comparator<Reminder>() {
             @Override
             public int compare(Reminder left, Reminder right) {
+                int comparisonByPriority = right.getPriority() - left.getPriority();
+                if (comparisonByPriority != 0) {
+                    return comparisonByPriority;
+                }
+
                 if (left.getDate() == null && right.getDate() == null) {
                     return 0;
                 } else if (left.getDate() == null) {

@@ -8,29 +8,31 @@ import java.util.UUID;
 
 public class Reminder {
 
+    public static final int PRIORITY_LOW = 10;
+    public static final int PRIORITY_NORMAL = 20;
+    public static final int PRIORITY_HIGH = 30;
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("y-MMMM-d-H-m-s");
 
     private String id;
-
     private String text;
-
     private Date date;
-
     private Date notificationDate;
+    private int priority;
 
-    private Reminder(final String id, final String text, final Date date, final Date notificationDate) {
+    private Reminder(final String id, final String text, final Date date, final Date notificationDate, final int priority) {
         this.id = id;
         this.text = text;
         this.date = date;
         this.notificationDate = notificationDate;
+        this.priority = priority;
     }
 
-    public Reminder(String text, Date date, Date notificationDate) {
-        this(UUID.randomUUID().toString(), text, date, notificationDate);
+    public Reminder(String text, Date date, Date notificationDate, int priority) {
+        this(UUID.randomUUID().toString(), text, date, notificationDate, priority);
     }
 
     public Reminder() {
-        this("", null, null);
+        this("", null, null, PRIORITY_NORMAL);
     }
 
     public String getId() {
@@ -65,6 +67,14 @@ public class Reminder {
         this.notificationDate = notificationDate;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -72,7 +82,8 @@ public class Reminder {
         stringBuilder.append(this.getText()).append(";");
         stringBuilder.append((this.getDate() != null)? DATE_FORMAT.format(this.getDate()) : "").append(";");
         stringBuilder.append((this.getNotificationDate() != null)? DATE_FORMAT.format(this.getNotificationDate()) : "").append(";");
-        stringBuilder.append(this.getId());
+        stringBuilder.append(this.getId()).append(";");
+        stringBuilder.append(this.getPriority());
 
         return stringBuilder.toString();
     }
@@ -83,14 +94,14 @@ public class Reminder {
         String dateText = data[1];
         String notificationDateText = data[2];
         String id = (data.length > 3)? data[3] : "";
+        String priority = (data.length > 4)? data[4] : "";
 
         Date date = (dateText != null && dateText.length() > 0)? DATE_FORMAT.parse(dateText) : null;
         Date notificationDate = (notificationDateText != null && notificationDateText.length() > 0)? DATE_FORMAT.parse(notificationDateText) : null;
-        if (id.isEmpty()) {
-            id = UUID.randomUUID().toString();
-        }
+        id = id.isEmpty()? UUID.randomUUID().toString() : id;
+        int priorityValue = priority.isEmpty()? PRIORITY_NORMAL : Integer.parseInt(priority);
 
-        return new Reminder(id, text, date, notificationDate);
+        return new Reminder(id, text, date, notificationDate, priorityValue);
     }
 
 }

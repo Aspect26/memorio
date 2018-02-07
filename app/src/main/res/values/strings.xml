@@ -16,6 +16,10 @@
     <string name="add_note_add_button">Add</string>
     <string name="add_note_button_date">Date</string>
     <string name="add_note_button_time">Time</string>
+    <string name="add_note_priority">Priority:</string>
+    <string name="add_note_priority_high">High</string>
+    <string name="add_note_priority_normal">Normal</string>
+    <string name="add_note_priority_low">Low</string>
 
     <string name="about_made_by">Made by: Julius Flimmel</string>
     <string name="about_contact">Contact: flimmelj@gmail.com</string>

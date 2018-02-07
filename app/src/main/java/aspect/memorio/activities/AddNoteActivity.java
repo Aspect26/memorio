@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TimePicker;
 
 import java.text.ParseException;
@@ -73,10 +75,43 @@ public class AddNoteActivity extends AppCompatActivity {
 
         EditText textEditor = findViewById(R.id.edit_text_new_note_text);
         textEditor.setText(this.reminder != null? this.reminder.getText() : "");
+
+        RadioButton highPriorityButton = findViewById(R.id.radio_priority_high);
+        highPriorityButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    reminder.setPriority(Reminder.PRIORITY_HIGH);
+                }
+            }
+        });
+
+        RadioButton normalPriorityButton = findViewById(R.id.radio_priority_normal);
+        normalPriorityButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    reminder.setPriority(Reminder.PRIORITY_NORMAL);
+                }
+            }
+        });
+
+        RadioButton lowPriorityButton = findViewById(R.id.radio_priority_low);
+        lowPriorityButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (checked) {
+                    reminder.setPriority(Reminder.PRIORITY_LOW);
+                }
+            }
+        });
+
+        this.setDefaultPriorityValue();
     }
 
     @Override
     protected Dialog onCreateDialog(int id) {
+        // TODO: resolve this deprecation
         Calendar defaultTime = Calendar.getInstance();
         if (reminder.getDate() != null) {
             defaultTime.setTimeInMillis(reminder.getDate().getTime());
@@ -109,6 +144,19 @@ public class AddNoteActivity extends AppCompatActivity {
             }, defaultTime.get(Calendar.HOUR_OF_DAY), defaultTime.get(Calendar.MINUTE), true);
         } else {
             return null;
+        }
+    }
+
+    private void setDefaultPriorityValue() {
+        if (this.reminder != null) {
+            switch (this.reminder.getPriority()) {
+                case Reminder.PRIORITY_HIGH:
+                    ((RadioButton) findViewById(R.id.radio_priority_high)).setChecked(true); break;
+                case Reminder.PRIORITY_NORMAL:
+                    ((RadioButton) findViewById(R.id.radio_priority_normal)).setChecked(true); break;
+                case Reminder.PRIORITY_LOW:
+                    ((RadioButton) findViewById(R.id.radio_priority_low)).setChecked(true); break;
+            }
         }
     }
 

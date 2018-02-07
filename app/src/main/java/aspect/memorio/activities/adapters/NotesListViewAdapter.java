@@ -85,6 +85,12 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             removeButton.setAlpha(0.5f);
             setRemoveButtonAction(removeButton, reminder);
             setOnClickListener(view, reminder);
+
+            if (reminder.getPriority() == Reminder.PRIORITY_HIGH) {
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_reminder));
+            } else if (reminder.getPriority() == Reminder.PRIORITY_LOW) {
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_reminder));
+            }
         }
 
         return view;
