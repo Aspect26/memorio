@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="@string/preference_cat_notifications">
+
+        <CheckBoxPreference
+            android:key="@string/preference_key_daily_todo"
+            android:title="@string/preference_tit_daily_todo"
+            android:summary="@string/preference_sum_daily_todo"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="@string/preference_key_reminders_notification"
+            android:title="@string/preference_tit_reminders_notification"
+            android:summary="@string/preference_sum_reminders_notification"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

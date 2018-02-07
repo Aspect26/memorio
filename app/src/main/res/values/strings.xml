@@ -20,6 +20,14 @@
     <string name="about_made_by">Made by: Julius Flimmel</string>
     <string name="about_contact">Contact: flimmelj@gmail.com</string>
 
+    <string name="preference_cat_notifications">Notifications</string>
+    <string name="preference_tit_daily_todo">Daily TODO notifications</string>
+    <string name="preference_tit_reminders_notification">Reminder notifications</string>
+    <string name="preference_sum_daily_todo">Turn on/off notification at the beginning of each day that lists all reminders for that day</string>
+    <string name="preference_sum_reminders_notification">Turn on/off notifications that show up hour before each reminder\'s due date</string>
+    <string name="preference_key_daily_todo">notification-daily-todo</string>
+    <string name="preference_key_reminders_notification">notification-reminder</string>
+
     <string name="note_time_remaining">Not specified</string>
     <string name="note_text">Empty</string>
 

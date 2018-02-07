@@ -3,9 +3,11 @@ package aspect.memorio.notifications;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 
 import java.util.List;
 
+import aspect.memorio.R;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.storage.DeviceFileStorage;
 import aspect.memorio.storage.Storage;
@@ -18,9 +20,15 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (intent.getStringExtra("type") != null) {
             switch (intent.getStringExtra("type")) {
                 case "daily":
-                    this.showDailyNotification(context); break;
+                    if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.preference_key_daily_todo), true)) {
+                        this.showDailyNotification(context);
+                        break;
+                    }
                 case "reminder":
-                    this.showReminderNotification(context, intent); break;
+                    if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.preference_key_reminders_notification), true)) {
+                        this.showReminderNotification(context, intent);
+                        break;
+                    }
             }
         }
 
