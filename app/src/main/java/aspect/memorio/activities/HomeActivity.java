@@ -90,6 +90,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.ABOUT);
         } else if (id == R.id.nav_help) {
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.HELP);
+        } else if (id == R.id.nav_changelog) {
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.CHANGELOG);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
