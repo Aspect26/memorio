@@ -73,7 +73,7 @@ public class NotificationsManager {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "channel")
                 .setContentTitle(title)
-                .setContentText(text)
+                .setContentText(text.isEmpty()? "<empty>" : text)
                 .setSmallIcon(R.drawable.ic_notification_small)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
                         R.drawable.ic_notification_large))

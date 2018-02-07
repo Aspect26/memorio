@@ -71,7 +71,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
 
         if (reminder != null) {
             TextView textView = view.findViewById(R.id.note_text);
-            textView.setText(reminder.getText().isEmpty()? "Empty" : reminder.getText());
+            textView.setText(reminder.getText().isEmpty()? "<empty>" : reminder.getText());
 
             textView = view.findViewById(R.id.note_remaining_time);
             if (reminder.getDate() == null) {
