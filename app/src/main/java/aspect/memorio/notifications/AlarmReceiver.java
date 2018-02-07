@@ -34,7 +34,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             return;
         }
         final String text = this.getDailyNotificationText(todayReminders);
-        NotificationsManager.showNotification(context, "You have " + todayReminders.size() + " reminders today", text, false);
+        NotificationsManager.showNotification(context, "You have " + todayReminders.size() + " reminders today", text, false, todayReminders.size());
     }
 
     private void showReminderNotification(Context context, Intent intent) {

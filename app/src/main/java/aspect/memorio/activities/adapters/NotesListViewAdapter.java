@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,11 +20,31 @@ import aspect.memorio.storage.Storage;
 
 public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
 
-    private static final int MINUTES_OF_YEAR = 60 * 24 * 30 * 365;
-    private static final int MINUTES_OF_MONTH = 60 * 24 * 30;
-    private static final int MINUTES_OF_WEEK = 60 * 24 * 7;
-    private static final int MINUTES_OF_DAY = 60 * 24;
-    private static final int MINUTES_OF_HOUR = 60;
+    private enum Measurement {
+        YEAR(60 * 24 * 30 * 365, "year"),
+        MONTH(60 * 24 * 30, "month"),
+        WEEK(60 * 24 * 7, "week"),
+        DAY(60 * 24, "day"),
+        HOUR(60, "hour"),
+        MINUTE(1, "minute");
+
+        public final int multiplier;
+        public final String label;
+
+        Measurement(int multiplier, String label) {
+            this.multiplier = multiplier;
+            this.label = label;
+        }
+    }
+
+    private static final List<Measurement> measurements = new ArrayList<Measurement>() {{
+        add(Measurement.YEAR);
+        add(Measurement.MONTH);
+        add(Measurement.WEEK);
+        add(Measurement.DAY);
+        add(Measurement.HOUR);
+        add(Measurement.MINUTE);
+    }};
 
     private final Storage storage;
     private final ListRemindersFragment remindersFragment;
@@ -88,19 +109,22 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             return "Now";
         }
 
-        if (minutesRemaining >= MINUTES_OF_YEAR) {
-            return minutesRemaining / MINUTES_OF_YEAR + " year(s)";
-        } else if (minutesRemaining >= MINUTES_OF_MONTH) {
-            return minutesRemaining / MINUTES_OF_MONTH + " month(s)";
-        } else if (minutesRemaining >= MINUTES_OF_WEEK) {
-            return minutesRemaining / MINUTES_OF_WEEK + " week(s)";
-        } else if (minutesRemaining >= MINUTES_OF_DAY) {
-            return minutesRemaining / MINUTES_OF_DAY + " day(s)";
-        } else if (minutesRemaining >= MINUTES_OF_HOUR) {
-            return minutesRemaining / MINUTES_OF_HOUR + " hour(s)";
-        } else {
-            return minutesRemaining + " minute(s)";
+        for (int i = 0; i < measurements.size() - 1; ++i) {
+            Measurement measurement = measurements.get(i);
+            Measurement secondaryMeasurement = measurements.get(i + 1);
+            if (minutesRemaining >= measurement.multiplier) {
+                int primaryCount = (int) minutesRemaining / measurement.multiplier;
+                int secondaryCount = (int) (minutesRemaining - primaryCount * measurement.multiplier) / secondaryMeasurement.multiplier;
+                String value = primaryCount + " " + measurement.label + "(s) ";
+                if (secondaryCount > 0) {
+                    value += secondaryCount + " " + secondaryMeasurement.label + "(s)";
+                }
+
+                return value;
+            }
         }
+
+        return minutesRemaining + " minute(s)";
     }
 
 }

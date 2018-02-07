@@ -6,7 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.Calendar;
@@ -34,13 +34,17 @@ public class NotificationsManager {
         return this.homeActivity;
     }
 
-    public static void showNotification(final Context context, final String title, final String text, final boolean vibrate) {
-        Notification notification = createNotification(context, title, text, vibrate);
+    public static void showNotification(final Context context, final String title, final String text, final boolean vibrate, final int number) {
+        Notification notification = createNotification(context, title, text, vibrate, number);
         showNotification(context, notification);
     }
 
-    public void showNotification(final String title, final String text, final boolean vibrate) {
-        showNotification(this.homeActivity, title, text, vibrate);
+    public static void showNotification(final Context context, final String title, final String text, final boolean vibrate) {
+        showNotification(context, title, text, vibrate, 0);
+    }
+
+    public void showNotification(final String title, final String text, final boolean vibrate, final int number) {
+        showNotification(this.homeActivity, title, text, vibrate, number);
     }
 
     public void addReminderNotification(Reminder reminder) {
@@ -63,14 +67,16 @@ public class NotificationsManager {
         }
     }
 
-    private static Notification createNotification(final Context context, final String title, final String text, final boolean vibrate) {
+    private static Notification createNotification(final Context context, final String title, final String text, final boolean vibrate, final int number) {
         Intent intent = new Intent(context, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), intent, 0);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, "channel")
                 .setContentTitle(title)
                 .setContentText(text)
-                .setSmallIcon(R.drawable.app_icon)
+                .setSmallIcon(R.drawable.ic_notification_small)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.ic_notification_large))
                 .setContentIntent(pendingIntent)
                 .setStyle(
                         new NotificationCompat.BigTextStyle()
@@ -80,6 +86,9 @@ public class NotificationsManager {
 
         if (vibrate) {
             notificationBuilder.setVibrate(new long[] { 1000, 1000, 1000 });
+        }
+        if (number > 0) {
+            notificationBuilder.setNumber(number);
         }
 
         Notification notification = notificationBuilder.build();
