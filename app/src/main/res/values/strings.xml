@@ -46,12 +46,16 @@
 - Fragments\
 - About tab\
 - Preferences tab\
+- ChangeLog tab\
 - More precise time estimate\
 - BUGFIX: icon in notifications is now correct\
 - BUGFIX: fixed setting hour in 12h mode
     </string>
     <string name="changelog_v_0_9_0_title">0.9.0 : 28 (06.02.2018 - Beta 1)</string>
-    <string name="changelog_v_0_9_0_summary">- Initial version</string>
+    <string name="changelog_v_0_9_0_summary">
+- Initial version
+- First line of code (03.02.2018)
+    </string>
 
     <string name="note_time_remaining">Not specified</string>
     <string name="note_text">Empty</string>
