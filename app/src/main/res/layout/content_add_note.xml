@@ -17,29 +17,57 @@
         <EditText
             android:id="@+id/edit_text_new_note_text"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:hint="@string/add_note_text" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:paddingLeft="50dp"
-            android:paddingStart="50dp"
-            android:paddingRight="50dp"
-            android:paddingEnd="50dp">
+            android:padding="20dp">
 
             <Button
                 android:id="@+id/button_add_note_date"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:background="@drawable/ic_calendar"
                 style="@style/ImageButton" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@id/button_add_note_date"
+                android:layout_toEndOf="@id/button_add_note_date"
+                android:layout_toLeftOf="@id/button_add_note_time"
+                android:layout_toStartOf="@id/button_add_note_time"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/text_datetime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="02.04.2018 19:00"/>
+
+                <TextView
+                    android:id="@+id/text_remaining_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="italic"
+                    android:textSize="13sp"
+                    android:text="3 day(s) 2 hour(s)"/>
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/button_add_note_time"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/ic_time"
@@ -55,6 +83,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
             <TextView

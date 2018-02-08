@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Memorio</string>
     <string name="app_name_develop">Memorio develop</string>
-    <string name="app_version">0.9.2:40</string>
-    <string name="app_version_long">Version: Beta 2 (0.9.2:40)</string>
+    <string name="app_version">0.9.2:46</string>
+    <string name="app_version_long">Version: Beta 2 (0.9.2:46)</string>
     <string name="app_email">flimmelj@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -39,7 +39,7 @@
     <string name="preference_key_daily_todo">notification-daily-todo</string>
     <string name="preference_key_reminders_notification">notification-reminder</string>
 
-    <string name="changelog_v_0_9_2_title">0.9.2 : 40 (XX.02.2018 - Beta 2)</string>
+    <string name="changelog_v_0_9_2_title">0.9.2 : 40 (08.02.2018 - Beta 2)</string>
     <string name="changelog_v_0_9_2_summary">
 - Reminders can now be edited\
 - Introduced priorities\
@@ -64,5 +64,6 @@
 
     <string name="done">Done</string>
     <string name="undo">Undo</string>
+    <string name="not_specified_date">Date not specified</string>
 
 </resources>

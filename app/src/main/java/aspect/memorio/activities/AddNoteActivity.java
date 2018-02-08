@@ -13,19 +13,24 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import aspect.memorio.R;
 import aspect.memorio.models.Reminder;
+import aspect.memorio.utils.Utils;
 
 public class AddNoteActivity extends AppCompatActivity {
 
     public static final String RESULT_INTENT_NOTE = "reminder";
     public static final String INPUT_INTENT_NOTE = "input";
 
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("d.MM.y H:m");
     private static final int DIALOG_CODE_DATE = 1;
     private static final int DIALOG_CODE_TIME = 2;
 
@@ -107,6 +112,7 @@ public class AddNoteActivity extends AppCompatActivity {
         });
 
         this.setDefaultPriorityValue();
+        this.refreshDateTimeTexts();
     }
 
     @Override
@@ -128,6 +134,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     noteDate.set(Calendar.MONTH, month);
                     noteDate.set(Calendar.DAY_OF_MONTH, day);
                     reminder.setDate(noteDate.getTime());
+                    refreshDateTimeTexts();
                 }
             }, defaultTime.get(Calendar.YEAR), defaultTime.get(Calendar.MONTH), defaultTime.get(Calendar.DAY_OF_MONTH));
         } else if (id == DIALOG_CODE_TIME) {
@@ -140,6 +147,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     noteTime.set(Calendar.HOUR_OF_DAY, hour);
                     noteTime.set(Calendar.MINUTE, minute);
                     reminder.setDate(noteTime.getTime());
+                    refreshDateTimeTexts();
                 }
             }, defaultTime.get(Calendar.HOUR_OF_DAY), defaultTime.get(Calendar.MINUTE), true);
         } else {
@@ -178,6 +186,16 @@ public class AddNoteActivity extends AppCompatActivity {
         intent.putExtra(RESULT_INTENT_NOTE, reminder.toString());
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void refreshDateTimeTexts() {
+        ((TextView) findViewById(R.id.text_datetime)).setText(
+                this.reminder.getDate() != null? DATE_FORMAT.format(this.reminder.getDate()) : getResources().getText(R.string.not_specified_date)
+        );
+
+        ((TextView) findViewById(R.id.text_remaining_time)).setText(
+                this.reminder.getDate() != null? Utils.getTimeRemainingFromNowText(this.reminder.getDate()) : ""
+        );
     }
 
 }

@@ -17,34 +17,9 @@ import aspect.memorio.R;
 import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.storage.Storage;
+import aspect.memorio.utils.Utils;
 
 public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
-
-    private enum Measurement {
-        YEAR(60 * 24 * 30 * 365, "year"),
-        MONTH(60 * 24 * 30, "month"),
-        WEEK(60 * 24 * 7, "week"),
-        DAY(60 * 24, "day"),
-        HOUR(60, "hour"),
-        MINUTE(1, "minute");
-
-        public final int multiplier;
-        public final String label;
-
-        Measurement(int multiplier, String label) {
-            this.multiplier = multiplier;
-            this.label = label;
-        }
-    }
-
-    private static final List<Measurement> measurements = new ArrayList<Measurement>() {{
-        add(Measurement.YEAR);
-        add(Measurement.MONTH);
-        add(Measurement.WEEK);
-        add(Measurement.DAY);
-        add(Measurement.HOUR);
-        add(Measurement.MINUTE);
-    }};
 
     private final Storage storage;
     private final ListRemindersFragment remindersFragment;
@@ -77,8 +52,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             if (reminder.getDate() == null) {
                 textView.setText("Not specified");
             } else {
-                long minutesRemaining = this.getNoteRemainingTime(reminder);
-                textView.setText(this.getNoteRemainingTimeText(minutesRemaining));
+                textView.setText(Utils.getTimeRemainingFromNowText(reminder.getDate()));
             }
 
             Button removeButton = view.findViewById(R.id.button_delete_reminder);
@@ -115,34 +89,6 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
                 remindersFragment.editReminder(reminder);
             }
         });
-    }
-
-    private long getNoteRemainingTime(Reminder note) {
-        Date noteDate = note.getDate();
-        return (noteDate.getTime() - new Date().getTime()) / (1000 * 60);
-    }
-
-    private String getNoteRemainingTimeText(long minutesRemaining) {
-        if (minutesRemaining == 0) {
-            return "Now";
-        }
-
-        for (int i = 0; i < measurements.size() - 1; ++i) {
-            Measurement measurement = measurements.get(i);
-            Measurement secondaryMeasurement = measurements.get(i + 1);
-            if (minutesRemaining >= measurement.multiplier) {
-                int primaryCount = (int) minutesRemaining / measurement.multiplier;
-                int secondaryCount = (int) (minutesRemaining - primaryCount * measurement.multiplier) / secondaryMeasurement.multiplier;
-                String value = primaryCount + " " + measurement.label + "(s) ";
-                if (secondaryCount > 0) {
-                    value += secondaryCount + " " + secondaryMeasurement.label + "(s)";
-                }
-
-                return value;
-            }
-        }
-
-        return minutesRemaining + " " + measurements.get(measurements.size() - 1).label + "(s)";
     }
 
 }
