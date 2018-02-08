@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Memorio</string>
+    <string name="app_name">Memorio develop</string>
     <string name="app_name_develop">Memorio develop</string>
-    <string name="app_version">0.9.2:46</string>
-    <string name="app_version_long">Version: Beta 2 (0.9.2:46)</string>
+    <string name="app_version">0.9.3:50</string>
+    <string name="app_version_long">Version: Final Beta (0.9.3:50)</string>
     <string name="app_email">flimmelj@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -39,7 +39,11 @@
     <string name="preference_key_daily_todo">notification-daily-todo</string>
     <string name="preference_key_reminders_notification">notification-reminder</string>
 
-    <string name="changelog_v_0_9_2_title">0.9.2 : 40 (08.02.2018 - Beta 2)</string>
+    <string name="changelog_v_0_9_3_title">0.9.3 : 50 (XX.02.2018 - Final Beta)</string>
+    <string name="changelog_v_0_9_3_summary">
+- Nothing, yet
+    </string>
+    <string name="changelog_v_0_9_2_title">0.9.2 : 49 (08.02.2018 - Beta 2)</string>
     <string name="changelog_v_0_9_2_summary">
 - Reminders can now be edited\
 - Introduced priorities\
@@ -47,13 +51,14 @@
 - About tab\
 - Preferences tab\
 - ChangeLog tab\
+- Add note activity design update\
 - More precise time estimate\
 - BUGFIX: icon in notifications is now correct\
 - BUGFIX: fixed setting hour in 12h mode
     </string>
     <string name="changelog_v_0_9_0_title">0.9.0 : 28 (06.02.2018 - Beta 1)</string>
     <string name="changelog_v_0_9_0_summary">
-- Initial version
+- Initial version\
 - First line of code (03.02.2018)
     </string>
 
