@@ -33,6 +33,13 @@
     <string name="add_note_priority_high">High</string>
     <string name="add_note_priority_normal">Normal</string>
     <string name="add_note_priority_low">Low</string>
+    <string name="add_note_notification">Notification</string>
+    <string name="add_note_notification_ontime">On time</string>
+    <string name="add_note_notification_15_minutes_before">15 minutes before</string>
+    <string name="add_note_notification_hour_before">1 Hour before</string>
+    <string name="add_note_notification_2_hours_before">2 Hours before</string>
+    <string name="add_note_notification_day_before">1 Day before</string>
+    <string name="add_note_notification_week_before">1 Week before</string>
 
     <string name="about_made_by">Made by: Julius Flimmel</string>
     <string name="about_contact">Contact: flimmelj@gmail.com</string>

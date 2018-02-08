@@ -127,6 +127,79 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/checkbox_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:checked="true"
+                android:text="@string/add_note_notification"/>
+
+            <RadioGroup
+                android:id="@+id/radio_group_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_notification_ontime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:checked="true"
+                    android:text="@string/add_note_notification_ontime"/>
+
+                <RadioButton
+                    android:id="@+id/radio_notification_15_minutes_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/add_note_notification_15_minutes_before"/>
+
+                <RadioButton
+                    android:id="@+id/radio_notification_hour_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/add_note_notification_hour_before"/>
+
+                <RadioButton
+                    android:id="@+id/radio_notification_2_hours_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/add_note_notification_2_hours_before"/>
+
+                <RadioButton
+                    android:id="@+id/radio_notification_day_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/add_note_notification_day_before"/>
+
+                <RadioButton
+                    android:id="@+id/radio_notification_week_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/add_note_notification_week_before"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
