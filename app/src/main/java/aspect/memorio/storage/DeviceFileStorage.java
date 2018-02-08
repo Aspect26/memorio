@@ -105,6 +105,7 @@ public class DeviceFileStorage implements Storage {
     @Override
     public void addReminder(Reminder reminder) {
         this.data.add(reminder);
+        this.flushAll();
     }
 
     @Override
@@ -116,17 +117,21 @@ public class DeviceFileStorage implements Storage {
             oldReminder.setDate(updatedReminder.getDate());
             oldReminder.setNotificationDate(updatedReminder.getNotificationDate());
             oldReminder.setText(updatedReminder.getText());
+            oldReminder.setPriority(updatedReminder.getPriority());
+            this.flushAll();
         }
     }
 
     @Override
     public void removeReminder(Reminder reminder) {
         this.data.remove(reminder);
+        this.flushAll();
     }
 
     @Override
     public void removeAllReminders() {
         this.data.clear();
+        this.flushAll();
     }
 
     @Override

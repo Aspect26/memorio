@@ -164,14 +164,12 @@ public class ListRemindersFragment extends Fragment {
 
     private void addReminder(Reminder reminder) {
         this.getStorage().addReminder(reminder);
-        this.getStorage().flushAll();
         this.reinitializeRemindersView();
         homeActivity.addOrUpdateReminderNotification(reminder);
     }
 
     private void updateReminder(Reminder reminder) {
         this.getStorage().updateOrAddReminder(reminder);
-        this.getStorage().flushAll();
         this.reinitializeRemindersView();
         homeActivity.addOrUpdateReminderNotification(reminder);
     }
