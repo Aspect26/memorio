@@ -42,7 +42,7 @@
     <string name="changelog_v_0_9_2_title">0.9.2 : 40 (XX.02.2018 - Beta 2)</string>
     <string name="changelog_v_0_9_2_summary">
 - Reminders can now be edited\
-- Introduced priorities
+- Introduced priorities\
 - Fragments\
 - About tab\
 - Preferences tab\

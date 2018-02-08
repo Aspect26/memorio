@@ -31,8 +31,6 @@ public class HomeActivityFragmentManager {
         this.homeActivity = homeActivity;
 
         this.listRemindersFragment = new ListRemindersFragment();
-        this.listRemindersFragment.setStorage(homeActivity.getStorage());
-
         this.aboutFragment = new AboutFragment();
         this.helpFragment = new HelpFragment();
         this.preferencesFragment = new PreferencesFragment();

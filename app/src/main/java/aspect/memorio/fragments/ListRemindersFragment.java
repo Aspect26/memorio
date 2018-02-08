@@ -33,7 +33,6 @@ public class ListRemindersFragment extends Fragment {
     public static final int REQUEST_EDIT_NOTE = 2;
 
     private ArrayAdapter<Reminder> notesViewAdapter;
-    private Storage storage;
     private HomeActivity homeActivity;
 
     @Override
@@ -41,14 +40,13 @@ public class ListRemindersFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    public void setStorage(Storage storage) {
-        this.storage = storage;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: refactor
         View view = inflater.inflate(R.layout.fragment_list_reminders, container, false);
+
+        this.homeActivity = (HomeActivity) getActivity();
+
         FloatingActionButton fab = view.findViewById(R.id.button_add_note);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,21 +56,21 @@ public class ListRemindersFragment extends Fragment {
         });
 
         ListView notesListView = view.findViewById(R.id.list_notes);
-        this.notesViewAdapter = new NotesListViewAdapter(getActivity(), this.storage.getAll(), this.storage, this);
+        this.notesViewAdapter = new NotesListViewAdapter(getActivity(), this.getStorage().getAll(), this.getStorage(), this);
         notesListView.setAdapter(this.notesViewAdapter);
 
         this.setAutomaticUpdate();
 
-        this.homeActivity = (HomeActivity) getActivity();
+
 
         return view;
     }
 
     private void reinitializeRemindersView() {
-        if (this.storage == null) {
+        if (this.getStorage() == null) {
             return;
         }
-        List<Reminder> reminders = this.storage.getAllNonExpired();
+        List<Reminder> reminders = this.getStorage().getAllNonExpired();
 
         Collections.sort(reminders, new Comparator<Reminder>() {
             @Override
@@ -145,14 +143,14 @@ public class ListRemindersFragment extends Fragment {
     }
 
     public void removeReminder(final Reminder reminder) {
-        storage.removeReminder(reminder);
+        this.getStorage().removeReminder(reminder);
         this.reinitializeRemindersView();
 
         Snackbar undoSnackBar = Snackbar.make(getView(), R.string.snackbar_reminder_removed, Snackbar.LENGTH_LONG);
         undoSnackBar.setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                storage.addReminder(reminder);
+                getStorage().addReminder(reminder);
                 reinitializeRemindersView();
             }
         });
@@ -160,16 +158,20 @@ public class ListRemindersFragment extends Fragment {
         undoSnackBar.show();
     }
 
+    private Storage getStorage() {
+        return this.homeActivity.getStorage();
+    }
+
     private void addReminder(Reminder reminder) {
-        this.storage.addReminder(reminder);
-        this.storage.flushAll();
+        this.getStorage().addReminder(reminder);
+        this.getStorage().flushAll();
         this.reinitializeRemindersView();
         homeActivity.addOrUpdateReminderNotification(reminder);
     }
 
     private void updateReminder(Reminder reminder) {
-        this.storage.updateOrAddReminder(reminder);
-        this.storage.flushAll();
+        this.getStorage().updateOrAddReminder(reminder);
+        this.getStorage().flushAll();
         this.reinitializeRemindersView();
         homeActivity.addOrUpdateReminderNotification(reminder);
     }
