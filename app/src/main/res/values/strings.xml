@@ -15,6 +15,12 @@
     <string name="nav_menu_about">About</string>
     <string name="nav_menu_changelog">ChangeLog</string>
 
+    <string name="toolbar_title_list_reminders">Reminders List</string>
+    <string name="toolbar_title_calendar">Reminders Calendar</string>
+    <string name="toolbar_title_preferences">Preferences</string>
+    <string name="toolbar_title_changelog">ChangeLog</string>
+    <string name="toolbar_title_about">About</string>
+
     <string name="action_remove_all">Remove all</string>
 
     <string name="title_activity_add_note">New Reminder</string>
@@ -41,7 +47,7 @@
 
     <string name="changelog_v_0_9_3_title">0.9.3 : 50 (XX.02.2018 - Final Beta)</string>
     <string name="changelog_v_0_9_3_summary">
-- Nothing, yet
+- Reminders opacity is linearly decreased with time
     </string>
     <string name="changelog_v_0_9_2_title">0.9.2 : 49 (08.02.2018 - Beta 2)</string>
     <string name="changelog_v_0_9_2_summary">
