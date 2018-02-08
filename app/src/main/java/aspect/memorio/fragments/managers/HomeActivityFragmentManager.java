@@ -9,21 +9,19 @@ import aspect.memorio.activities.HomeActivity;
 import aspect.memorio.fragments.AboutFragment;
 import aspect.memorio.fragments.CalendarFragment;
 import aspect.memorio.fragments.ChangelogFragment;
-import aspect.memorio.fragments.HelpFragment;
 import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.fragments.PreferencesFragment;
 
 public class HomeActivityFragmentManager {
 
     public enum FragmentType {
-        REMINDERS_LIST, CALENDAR_VIEW, PREFERENCES, HELP, CHANGELOG, ABOUT
+        REMINDERS_LIST, CALENDAR_VIEW, PREFERENCES, CHANGELOG, ABOUT
     }
 
     private final HomeActivity homeActivity;
     private final ListRemindersFragment listRemindersFragment;
     private final CalendarFragment calendarFragment;
     private final AboutFragment aboutFragment;
-    private final HelpFragment helpFragment;
     private final PreferencesFragment preferencesFragment;
     private final ChangelogFragment changelogFragment;
 
@@ -32,7 +30,6 @@ public class HomeActivityFragmentManager {
 
         this.listRemindersFragment = new ListRemindersFragment();
         this.aboutFragment = new AboutFragment();
-        this.helpFragment = new HelpFragment();
         this.preferencesFragment = new PreferencesFragment();
         this.calendarFragment = new CalendarFragment();
         this.changelogFragment = new ChangelogFragment();
@@ -59,8 +56,6 @@ public class HomeActivityFragmentManager {
                 return this.listRemindersFragment;
             case ABOUT:
                 return this.aboutFragment;
-            case HELP:
-                return this.helpFragment;
             case PREFERENCES:
                 return this.preferencesFragment;
             case CALENDAR_VIEW:
