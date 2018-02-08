@@ -1,13 +1,14 @@
 package aspect.memorio.activities;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -31,8 +32,6 @@ public class AddNoteActivity extends AppCompatActivity {
     public static final String INPUT_INTENT_NOTE = "input";
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("d.MM.y H:m");
-    private static final int DIALOG_CODE_DATE = 1;
-    private static final int DIALOG_CODE_TIME = 2;
 
     private Reminder reminder;
 
@@ -66,7 +65,7 @@ public class AddNoteActivity extends AppCompatActivity {
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(DIALOG_CODE_DATE);
+                showDateDialog();
             }
         });
 
@@ -74,7 +73,7 @@ public class AddNoteActivity extends AppCompatActivity {
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog(DIALOG_CODE_TIME);
+                showTimeDialog();
             }
         });
 
@@ -115,43 +114,57 @@ public class AddNoteActivity extends AppCompatActivity {
         this.refreshDateTimeTexts();
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO: resolve this deprecation
-        Calendar defaultTime = Calendar.getInstance();
+    private void showDateDialog() {
+        Calendar defaultTime = getDefaultTimeForDateTimeDialog();
+        hideKeyboard();
+
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                Calendar noteDate = Calendar.getInstance();
+                noteDate.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
+
+                noteDate.set(Calendar.YEAR, year);
+                noteDate.set(Calendar.MONTH, month);
+                noteDate.set(Calendar.DAY_OF_MONTH, day);
+                reminder.setDate(noteDate.getTime());
+                refreshDateTimeTexts();
+            }
+        }, defaultTime.get(Calendar.YEAR), defaultTime.get(Calendar.MONTH), defaultTime.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void showTimeDialog() {
+        Calendar defaultTime = getDefaultTimeForDateTimeDialog();
+        hideKeyboard();
+
+        new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                Calendar noteTime = Calendar.getInstance();
+                noteTime.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
+
+                noteTime.set(Calendar.HOUR_OF_DAY, hour);
+                noteTime.set(Calendar.MINUTE, minute);
+                reminder.setDate(noteTime.getTime());
+                refreshDateTimeTexts();
+            }
+        }, defaultTime.get(Calendar.HOUR_OF_DAY), defaultTime.get(Calendar.MINUTE), true).show();
+    }
+
+    private Calendar getDefaultTimeForDateTimeDialog() {
+        Calendar calendar = Calendar.getInstance();
         if (reminder.getDate() != null) {
-            defaultTime.setTimeInMillis(reminder.getDate().getTime());
+            calendar.setTimeInMillis(reminder.getDate().getTime());
         }
 
-        if (id == DIALOG_CODE_DATE) {
-            return new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                    Calendar noteDate = Calendar.getInstance();
-                    noteDate.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
+        return calendar;
+    }
 
-                    noteDate.set(Calendar.YEAR, year);
-                    noteDate.set(Calendar.MONTH, month);
-                    noteDate.set(Calendar.DAY_OF_MONTH, day);
-                    reminder.setDate(noteDate.getTime());
-                    refreshDateTimeTexts();
-                }
-            }, defaultTime.get(Calendar.YEAR), defaultTime.get(Calendar.MONTH), defaultTime.get(Calendar.DAY_OF_MONTH));
-        } else if (id == DIALOG_CODE_TIME) {
-            return new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                    Calendar noteTime = Calendar.getInstance();
-                    noteTime.setTimeInMillis((reminder.getDate() != null)? reminder.getDate().getTime() : System.currentTimeMillis());
-
-                    noteTime.set(Calendar.HOUR_OF_DAY, hour);
-                    noteTime.set(Calendar.MINUTE, minute);
-                    reminder.setDate(noteTime.getTime());
-                    refreshDateTimeTexts();
-                }
-            }, defaultTime.get(Calendar.HOUR_OF_DAY), defaultTime.get(Calendar.MINUTE), true);
-        } else {
-            return null;
+    private void hideKeyboard() {
+        InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        View contentView = findViewById(R.id.content_add_note);
+        if (imm != null && contentView != null) {
+            imm.hideSoftInputFromWindow(contentView.getWindowToken(), 0);
         }
     }
 
