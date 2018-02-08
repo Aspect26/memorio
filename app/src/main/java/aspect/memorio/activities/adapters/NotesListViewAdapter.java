@@ -9,24 +9,21 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.models.Reminder;
-import aspect.memorio.storage.Storage;
 import aspect.memorio.utils.Utils;
 
 public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
 
-    private final Storage storage;
+    private static final float MIN_OPACITY = 0.3f;
+
     private final ListRemindersFragment remindersFragment;
 
-    public NotesListViewAdapter(Context context, List<Reminder> items, final Storage storage, ListRemindersFragment remindersFragment) {
+    public NotesListViewAdapter(Context context, List<Reminder> items, ListRemindersFragment remindersFragment) {
         super(context, R.layout.note_item, items);
-        this.storage = storage;
         this.remindersFragment = remindersFragment;
     }
 
@@ -67,6 +64,8 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             } else if (reminder.getPriority() == Reminder.PRIORITY_LOW) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_reminder));
             }
+
+            this.setOpacity(view, reminder);
         }
 
         return view;
@@ -89,6 +88,25 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
                 remindersFragment.editReminder(reminder);
             }
         });
+    }
+
+    private void setOpacity(View view, Reminder reminder) {
+        long minutesDiff = Utils.getTimeRemainingFromNowInMinutes(reminder.getDate());
+        if (minutesDiff <= 0) {
+            return;
+        }
+
+        float monthsRemaining = minutesDiff / (60 * 24 * 30.0f);
+        float opacity;
+        if (monthsRemaining > 1.0) {
+            opacity = MIN_OPACITY;
+        } else if (monthsRemaining < 0.2f) {
+            opacity = 1.0f;
+        } else {
+            opacity = (1 - monthsRemaining) * MIN_OPACITY + MIN_OPACITY;
+        }
+        view.findViewById(R.id.note_text).setAlpha(opacity);
+        view.findViewById(R.id.note_remaining_time).setAlpha(opacity);
     }
 
 }

@@ -56,12 +56,10 @@ public class ListRemindersFragment extends Fragment {
         });
 
         ListView notesListView = view.findViewById(R.id.list_notes);
-        this.notesViewAdapter = new NotesListViewAdapter(getActivity(), this.getStorage().getAll(), this.getStorage(), this);
+        this.notesViewAdapter = new NotesListViewAdapter(getActivity(), this.getStorage().getAll(), this);
         notesListView.setAdapter(this.notesViewAdapter);
 
         this.setAutomaticUpdate();
-
-
 
         return view;
     }
