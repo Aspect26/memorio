@@ -8,23 +8,27 @@
             android:id="@+id/nav_reminders"
             android:icon="@drawable/ic_menu_list"
             android:checked="true"
-            android:title="Reminders" />
+            android:title="@string/nav_menu_reminders" />
         <item
             android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_menu_calendar"
-            android:title="Calendar" />
+            android:title="@string/nav_menu_calendar" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_menu_settings"
-            android:title="Preferences" />
+            android:title="@string/nav_menu_preferences" />
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_help"
-            android:title="Help" />
+            android:title="@string/nav_menu_help" />
+        <item
+            android:id="@+id/nav_changelog"
+            android:icon="@drawable/ic_changelog"
+            android:title="@string/nav_menu_changelog" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_about"
-            android:title="About" />
+            android:title="@string/nav_menu_about" />
     </group>
 
 </menu>

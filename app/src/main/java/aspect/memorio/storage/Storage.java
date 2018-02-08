@@ -34,6 +34,11 @@ public interface Storage {
     void addReminder(Reminder reminder);
 
     /**
+     * Updates the specified reminder. If the reminder is not found, then adds new
+     */
+    void updateOrAddReminder(Reminder reminder);
+
+    /**
      * Removes the specified note from the storage
      * @return true if successful, false otherwise
      */

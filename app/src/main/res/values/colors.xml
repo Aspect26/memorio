@@ -4,11 +4,15 @@
     <color name="colorPrimaryDark">#3f0083</color>
     <color name="colorPrimary">#5e00c2</color>
     <color name="colorPrimaryLight">#a250ff</color>
-    <color name="colorPrimaryExtraLight">#edddff</color>
+    <color name="colorPrimaryExtraLight">#f7efff</color>
 
     <color name="colorSecondary">#000000</color>
 
     <color name="colorAccent">#007e02</color>
 
     <color name="white">#FFFFFF</color>
+
+    <color name="high_priority_reminder">#f9d0d0</color>
+    <color name="normal_priority_reminder">#ffffff</color>
+    <color name="low_priority_reminder">#cff5cf</color>
 </resources>
