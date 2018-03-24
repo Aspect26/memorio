@@ -56,8 +56,12 @@ public class Utils {
     }
 
     public static String getTimeRemainingFromNowText(Date date) {
-        long minutesDiff = (date.getTime() - new Date().getTime()) / (1000 * 60);
+        long minutesDiff = getTimeRemainingFromNowInMinutes(date);
         return getTimeIntervalText(minutesDiff);
+    }
+
+    public static long getTimeRemainingFromNowInMinutes(Date date) {
+        return date == null? 0 : (date.getTime() - new Date().getTime()) / (1000 * 60);
     }
 
 }

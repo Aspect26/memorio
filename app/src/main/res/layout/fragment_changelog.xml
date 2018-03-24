@@ -15,6 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChangeLogVersion"
+            android:text="@string/changelog_v_0_9_3_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ChangeLogSummary"
+            android:text="@string/changelog_v_0_9_3_summary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ChangeLogVersion"
             android:text="@string/changelog_v_0_9_2_title" />
 
         <TextView

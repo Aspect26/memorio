@@ -48,12 +48,12 @@ public class NotificationsManager {
     }
 
     public void addOrUpdateReminderNotification(Reminder reminder) {
-        if (reminder.getDate() == null) {
+        if (reminder.getNotificationDate() == null) {
             return;
         }
 
         Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(reminder.getDate().getTime());
+        time.setTimeInMillis(reminder.getNotificationDate().getTime());
         time.add(Calendar.HOUR, -1);
 
         Intent intent = new Intent(this.homeActivity, AlarmReceiver.class);

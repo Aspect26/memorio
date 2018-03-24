@@ -18,10 +18,6 @@
             android:icon="@drawable/ic_menu_settings"
             android:title="@string/nav_menu_preferences" />
         <item
-            android:id="@+id/nav_help"
-            android:icon="@drawable/ic_menu_help"
-            android:title="@string/nav_menu_help" />
-        <item
             android:id="@+id/nav_changelog"
             android:icon="@drawable/ic_changelog"
             android:title="@string/nav_menu_changelog" />
