@@ -61,7 +61,7 @@ public class Utils {
     }
 
     public static long getTimeRemainingFromNowInMinutes(Date date) {
-        return (date.getTime() - new Date().getTime()) / (1000 * 60);
+        return date == null? 0 : (date.getTime() - new Date().getTime()) / (1000 * 60);
     }
 
 }
