@@ -4,7 +4,7 @@ import java.util.List;
 
 import aspect.memorio.models.Reminder;
 
-public interface Storage {
+public interface RemindersStorage {
 
     /**
      * Loads all the data

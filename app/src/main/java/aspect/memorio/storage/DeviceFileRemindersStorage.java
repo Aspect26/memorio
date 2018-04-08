@@ -14,13 +14,13 @@ import java.util.List;
 
 import aspect.memorio.models.Reminder;
 
-public class DeviceFileStorage implements Storage {
+public class DeviceFileRemindersStorage implements RemindersStorage {
 
     private static final String FILE_NAME = "data.dat";
     private final List<Reminder> data;
     private final Context context;
 
-    public DeviceFileStorage(Context context) {
+    public DeviceFileRemindersStorage(Context context) {
         this.context = context;
         this.data = new ArrayList<>();
     }
@@ -48,7 +48,7 @@ public class DeviceFileStorage implements Storage {
             inputStream.close();
             return true;
         } catch (Exception e) {
-            Log.d("[DeviceFileStorage]", e.getMessage());
+            Log.d("[DeviceFileRemindersStorage]", e.getMessage());
             return false;
         }
     }
@@ -124,7 +124,12 @@ public class DeviceFileStorage implements Storage {
 
     @Override
     public void removeReminder(Reminder reminder) {
-        this.data.remove(reminder);
+        for (int index = 0; index < this.data.size(); ++index) {
+            if (this.data.get(index).getId().equals(reminder.getId())) {
+                this.data.remove(index);
+                break;
+            }
+        }
         this.flushAll();
     }
 
@@ -148,7 +153,7 @@ public class DeviceFileStorage implements Storage {
             }
             outputStream.close();
         } catch (Exception e) {
-            Log.d("[DeviceFileStorage]", e.getMessage());
+            Log.d("[DeviceFileRemindersStorage]", e.getMessage());
         }
     }
 

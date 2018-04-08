@@ -16,13 +16,13 @@ import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.utils.Utils;
 
-public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
+public class RemindersListViewAdapter extends ArrayAdapter<Reminder> {
 
     private static final float MIN_OPACITY = 0.3f;
 
     private final ListRemindersFragment remindersFragment;
 
-    public NotesListViewAdapter(Context context, List<Reminder> items, ListRemindersFragment remindersFragment) {
+    public RemindersListViewAdapter(Context context, List<Reminder> items, ListRemindersFragment remindersFragment) {
         super(context, R.layout.note_item, items);
         this.remindersFragment = remindersFragment;
     }

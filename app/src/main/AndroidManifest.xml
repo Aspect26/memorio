@@ -31,6 +31,12 @@
             android:windowSoftInputMode="stateVisible">
         </activity>
 
+        <activity android:name=".activities.AddTodoActivity"
+            android:label="@string/title_activity_add_todo"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible">
+        </activity>
+
     </application>
 
 </manifest>

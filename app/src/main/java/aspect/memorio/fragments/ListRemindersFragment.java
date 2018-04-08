@@ -22,9 +22,9 @@ import java.util.TimerTask;
 import aspect.memorio.R;
 import aspect.memorio.activities.AddNoteActivity;
 import aspect.memorio.activities.HomeActivity;
-import aspect.memorio.activities.adapters.NotesListViewAdapter;
+import aspect.memorio.activities.adapters.RemindersListViewAdapter;
 import aspect.memorio.models.Reminder;
-import aspect.memorio.storage.Storage;
+import aspect.memorio.storage.RemindersStorage;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -58,7 +58,7 @@ public class ListRemindersFragment extends Fragment {
         });
 
         ListView notesListView = view.findViewById(R.id.list_notes);
-        this.notesViewAdapter = new NotesListViewAdapter(getActivity(), this.getStorage().getAll(), this);
+        this.notesViewAdapter = new RemindersListViewAdapter(getActivity(), this.getStorage().getAll(), this);
         notesListView.setAdapter(this.notesViewAdapter);
 
         this.setAutomaticUpdate();
@@ -158,8 +158,8 @@ public class ListRemindersFragment extends Fragment {
         undoSnackBar.show();
     }
 
-    private Storage getStorage() {
-        return this.homeActivity.getStorage();
+    private RemindersStorage getStorage() {
+        return this.homeActivity.getRemindersStorage();
     }
 
     private void addReminder(Reminder reminder) {
