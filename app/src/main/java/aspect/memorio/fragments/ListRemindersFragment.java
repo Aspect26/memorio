@@ -70,7 +70,7 @@ public class ListRemindersFragment extends Fragment {
         if (this.getStorage() == null) {
             return;
         }
-        List<Reminder> reminders = this.getStorage().getAllNonExpired();
+        List<Reminder> reminders = this.getStorage().getAllActive();
 
         Collections.sort(reminders, new Comparator<Reminder>() {
             @Override
@@ -143,14 +143,14 @@ public class ListRemindersFragment extends Fragment {
     }
 
     public void removeReminder(final Reminder reminder) {
-        this.getStorage().removeReminder(reminder);
+        this.getStorage().remove(reminder);
         this.reinitializeRemindersView();
 
         Snackbar undoSnackBar = Snackbar.make(getView(), R.string.snackbar_reminder_removed, Snackbar.LENGTH_LONG);
         undoSnackBar.setAction(R.string.undo, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getStorage().addReminder(reminder);
+                getStorage().add(reminder);
                 reinitializeRemindersView();
             }
         });
@@ -163,13 +163,13 @@ public class ListRemindersFragment extends Fragment {
     }
 
     private void addReminder(Reminder reminder) {
-        this.getStorage().addReminder(reminder);
+        this.getStorage().add(reminder);
         this.reinitializeRemindersView();
         homeActivity.addOrUpdateReminderNotification(reminder);
     }
 
     private void updateReminder(Reminder reminder) {
-        this.getStorage().updateOrAddReminder(reminder);
+        this.getStorage().updateOrAdd(reminder);
         this.reinitializeRemindersView();
         homeActivity.addOrUpdateReminderNotification(reminder);
     }

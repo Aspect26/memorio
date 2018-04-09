@@ -29,7 +29,7 @@ import aspect.memorio.R;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.utils.Utils;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddNoteActivity extends AddItemActivity {
 
     public static final String RESULT_INTENT_NOTE = "reminder";
     public static final String INPUT_INTENT_NOTE = "input";

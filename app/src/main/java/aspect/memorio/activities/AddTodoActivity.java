@@ -26,7 +26,7 @@ import aspect.memorio.R;
 import aspect.memorio.models.Todo;
 import aspect.memorio.utils.Utils;
 
-public class AddTodoActivity extends AppCompatActivity {
+public class AddTodoActivity extends AddItemActivity {
 
     public static final String RESULT_INTENT_TODO = "todo";
     public static final String INPUT_INTENT_TODO = "input_todo";
