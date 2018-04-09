@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">Memorio develop</string>
     <string name="app_name_develop">Memorio develop</string>
-    <string name="app_version">0.9.3:55</string>
-    <string name="app_version_long">Version: Final Beta (0.9.3:55)</string>
+    <string name="app_version">1.0.0:55</string>
+    <string name="app_version_long">Version: TODOs (1.0.0:55)</string>
     <string name="app_email">flimmelj@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="nav_menu_reminders">Reminders</string>
+    <string name="nav_menu_todos">TODOs</string>
     <string name="nav_menu_calendar">Calendar</string>
     <string name="nav_menu_preferences">Preferences</string>
     <string name="nav_menu_help">Help</string>
@@ -16,6 +17,7 @@
     <string name="nav_menu_changelog">ChangeLog</string>
 
     <string name="toolbar_title_list_reminders">Reminders List</string>
+    <string name="toolbar_title_list_todos">TODOs list</string>
     <string name="toolbar_title_calendar">Reminders Calendar</string>
     <string name="toolbar_title_preferences">Preferences</string>
     <string name="toolbar_title_changelog">ChangeLog</string>
@@ -24,6 +26,7 @@
     <string name="action_remove_all">Remove all</string>
 
     <string name="title_activity_add_note">New Reminder</string>
+    <string name="title_activity_add_todo">New Todo</string>
 
     <string name="add_note_text">Note text</string>
     <string name="add_note_add_button">Add</string>
@@ -41,6 +44,8 @@
     <string name="add_note_notification_day_before">1 Day before</string>
     <string name="add_note_notification_week_before">1 Week before</string>
 
+    <string name="add_todo_label">Todo label</string>
+
     <string name="about_made_by">Made by: Julius Flimmel</string>
     <string name="about_contact">Contact: flimmelj@gmail.com</string>
 
@@ -52,7 +57,12 @@
     <string name="preference_key_daily_todo">notification-daily-todo</string>
     <string name="preference_key_reminders_notification">notification-reminder</string>
 
-    <string name="changelog_v_0_9_3_title">0.9.3 : 50 (XX.03.2018 - Final Beta)</string>
+    <string name="changelog_v_1_0_0_title">1.0.0 : 55 (DD.04.2018 - TODOs)</string>
+    <string name="changelog_v_1_0_0_summary">
+- Added TODOs tab\
+- Removed empty calendar tab
+    </string>
+    <string name="changelog_v_0_9_3_title">0.9.3 : 55 (24.03.2018 - Final Beta)</string>
     <string name="changelog_v_0_9_3_summary">
 - The user is now able to set notification time of a reminder\
 - Reminders opacity is linearly decreased with time
@@ -80,9 +90,12 @@
     <string name="note_text">Empty</string>
 
     <string name="snackbar_reminder_removed">Reminder removed</string>
+    <string name="snackbar_todo_removed">TODO removed</string>
+    <string name="snackbar_todo_completed">TODO completed</string>
 
     <string name="done">Done</string>
     <string name="undo">Undo</string>
+    <string name="not_specified_generic">Not specified</string>
     <string name="not_specified_date">Date not specified</string>
 
 </resources>

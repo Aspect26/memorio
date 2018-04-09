@@ -7,20 +7,20 @@ import android.support.v4.app.FragmentTransaction;
 import aspect.memorio.R;
 import aspect.memorio.activities.HomeActivity;
 import aspect.memorio.fragments.AboutFragment;
-import aspect.memorio.fragments.CalendarFragment;
 import aspect.memorio.fragments.ChangelogFragment;
 import aspect.memorio.fragments.ListRemindersFragment;
+import aspect.memorio.fragments.ListTodosFragment;
 import aspect.memorio.fragments.PreferencesFragment;
 
 public class HomeActivityFragmentManager {
 
     public enum FragmentType {
-        REMINDERS_LIST, CALENDAR_VIEW, PREFERENCES, CHANGELOG, ABOUT
+        REMINDERS_LIST, TODO_LIST, PREFERENCES, CHANGELOG, ABOUT
     }
 
     private final HomeActivity homeActivity;
     private final ListRemindersFragment listRemindersFragment;
-    private final CalendarFragment calendarFragment;
+    private final ListTodosFragment listTodosFragment;
     private final AboutFragment aboutFragment;
     private final PreferencesFragment preferencesFragment;
     private final ChangelogFragment changelogFragment;
@@ -29,9 +29,9 @@ public class HomeActivityFragmentManager {
         this.homeActivity = homeActivity;
 
         this.listRemindersFragment = new ListRemindersFragment();
+        this.listTodosFragment = new ListTodosFragment();
         this.aboutFragment = new AboutFragment();
         this.preferencesFragment = new PreferencesFragment();
-        this.calendarFragment = new CalendarFragment();
         this.changelogFragment = new ChangelogFragment();
     }
 
@@ -54,12 +54,12 @@ public class HomeActivityFragmentManager {
         switch (type) {
             case REMINDERS_LIST:
                 return this.listRemindersFragment;
+            case TODO_LIST:
+                return this.listTodosFragment;
             case ABOUT:
                 return this.aboutFragment;
             case PREFERENCES:
                 return this.preferencesFragment;
-            case CALENDAR_VIEW:
-                return this.calendarFragment;
             case CHANGELOG:
                 return this.changelogFragment;
             default:

@@ -14,7 +14,7 @@
 
     <color name="white">#FFFFFF</color>
 
-    <color name="high_priority_reminder">#f9d0d0</color>
-    <color name="normal_priority_reminder">#ffffff</color>
-    <color name="low_priority_reminder">#cff5cf</color>
+    <color name="high_priority_item">#f9d0d0</color>
+    <color name="normal_priority_item">#ffffff</color>
+    <color name="low_priority_item">#cff5cf</color>
 </resources>

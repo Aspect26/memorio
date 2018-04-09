@@ -25,8 +25,14 @@
         </activity>
 
         <activity
-            android:name=".activities.AddNoteActivity"
+            android:name=".activities.AddReminderActivity"
             android:label="@string/title_activity_add_note"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible">
+        </activity>
+
+        <activity android:name=".activities.AddTodoActivity"
+            android:label="@string/title_activity_add_todo"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateVisible">
         </activity>
