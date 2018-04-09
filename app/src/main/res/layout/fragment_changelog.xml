@@ -15,13 +15,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChangeLogVersion"
-            android:text="@string/changelog_v_1_0_0_title" />
+            android:text="@string/changelog_v_1_1_title" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ChangeLogSummary"
-            android:text="@string/changelog_v_1_0_0_summary" />
+            android:text="@string/changelog_v_1_1_summary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ChangeLogVersion"
+            android:text="@string/changelog_v_1_0_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ChangeLogSummary"
+            android:text="@string/changelog_v_1_0_summary" />
 
         <TextView
             android:layout_width="wrap_content"
