@@ -8,21 +8,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import aspect.memorio.models.Reminder;
 
-public class DeviceFileStorage implements Storage {
+public class DeviceFileRemindersStorage implements RemindersStorage {
 
     private static final String FILE_NAME = "data.dat";
     private final List<Reminder> data;
     private final Context context;
 
-    public DeviceFileStorage(Context context) {
+    public DeviceFileRemindersStorage(Context context) {
         this.context = context;
         this.data = new ArrayList<>();
+    }
+
+    @Override
+    public Reminder createNewItemFromString(String dataString) throws ParseException {
+        return Reminder.createFromString(dataString);
     }
 
     @Override
@@ -48,7 +54,7 @@ public class DeviceFileStorage implements Storage {
             inputStream.close();
             return true;
         } catch (Exception e) {
-            Log.d("[DeviceFileStorage]", e.getMessage());
+            Log.d("[DeviceFileRemindersStorage]", e.getMessage());
             return false;
         }
     }
@@ -80,7 +86,7 @@ public class DeviceFileStorage implements Storage {
     }
 
     @Override
-    public List<Reminder> getAllNonExpired() {
+    public List<Reminder> getAllActive() {
         List<Reminder> nonExpiredReminders = new ArrayList<>();
         for (Reminder reminder : this.data) {
             if (reminder.getDate() == null) {
@@ -103,16 +109,16 @@ public class DeviceFileStorage implements Storage {
     }
 
     @Override
-    public void addReminder(Reminder reminder) {
+    public void add(Reminder reminder) {
         this.data.add(reminder);
         this.flushAll();
     }
 
     @Override
-    public void updateOrAddReminder(Reminder updatedReminder) {
+    public void updateOrAdd(Reminder updatedReminder) {
         Reminder oldReminder = this.findReminder(updatedReminder.getId());
         if (oldReminder == null) {
-            this.addReminder(updatedReminder);
+            this.add(updatedReminder);
         } else {
             oldReminder.setDate(updatedReminder.getDate());
             oldReminder.setNotificationDate(updatedReminder.getNotificationDate());
@@ -123,8 +129,13 @@ public class DeviceFileStorage implements Storage {
     }
 
     @Override
-    public void removeReminder(Reminder reminder) {
-        this.data.remove(reminder);
+    public void remove(Reminder reminder) {
+        for (int index = 0; index < this.data.size(); ++index) {
+            if (this.data.get(index).getId().equals(reminder.getId())) {
+                this.data.remove(index);
+                break;
+            }
+        }
         this.flushAll();
     }
 
@@ -148,7 +159,7 @@ public class DeviceFileStorage implements Storage {
             }
             outputStream.close();
         } catch (Exception e) {
-            Log.d("[DeviceFileStorage]", e.getMessage());
+            Log.d("[DeviceFileRemindersStorage]", e.getMessage());
         }
     }
 

@@ -9,8 +9,8 @@ import java.util.List;
 
 import aspect.memorio.R;
 import aspect.memorio.models.Reminder;
-import aspect.memorio.storage.DeviceFileStorage;
-import aspect.memorio.storage.Storage;
+import aspect.memorio.storage.DeviceFileRemindersStorage;
+import aspect.memorio.storage.RemindersStorage;
 
 public class AlarmReceiver extends BroadcastReceiver {
     String TAG = "AlarmReceiver";
@@ -35,9 +35,9 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
 
     private void showDailyNotification(Context context) {
-        final Storage storage = new DeviceFileStorage(context);
-        storage.loadAll();
-        final List<Reminder> todayReminders = storage.getAllToday();
+        final RemindersStorage remindersStorage = new DeviceFileRemindersStorage(context);
+        remindersStorage.loadAll();
+        final List<Reminder> todayReminders = remindersStorage.getAllToday();
         if (todayReminders.size() == 0) {
             return;
         }

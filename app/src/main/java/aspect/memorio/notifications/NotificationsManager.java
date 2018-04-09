@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 
 import java.util.Calendar;
@@ -81,8 +82,7 @@ public class NotificationsManager {
                 .setStyle(
                         new NotificationCompat.BigTextStyle()
                         .bigText(text))
-                // TODO: get this from colors.xml
-                .setLights(4128899, 3000, 3000);
+                .setLights(context.getResources().getColor(R.color.colorPrimaryDark), 3000, 3000);
 
         if (vibrate) {
             notificationBuilder.setVibrate(new long[] { 1000, 1000, 1000 });

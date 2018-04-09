@@ -15,21 +15,25 @@ import aspect.memorio.R;
 import aspect.memorio.fragments.managers.HomeActivityFragmentManager;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.notifications.NotificationsManager;
-import aspect.memorio.storage.DeviceFileStorage;
-import aspect.memorio.storage.Storage;
+import aspect.memorio.storage.DeviceFileRemindersStorage;
+import aspect.memorio.storage.DeviceFileTODOsStorage;
+import aspect.memorio.storage.RemindersStorage;
+import aspect.memorio.storage.TodosStorage;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Storage storage;
+    private RemindersStorage remindersStorage;
+    private TodosStorage todosStorage;
     private NotificationsManager notificationsManager;
     private HomeActivityFragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: refactor
         super.onCreate(savedInstanceState);
-        this.storage = new DeviceFileStorage(this);
-        this.storage.loadAll();
+        this.remindersStorage = new DeviceFileRemindersStorage(this);
+        this.remindersStorage.loadAll();
+        this.todosStorage = new DeviceFileTODOsStorage(this);
+        this.todosStorage.loadAll();
 
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -82,8 +86,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_reminders) {
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.REMINDERS_LIST);
-        } else if (id == R.id.nav_calendar) {
-            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.CALENDAR_VIEW);
+        } else if (id == R.id.nav_todos) {
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.TODO_LIST);
         } else if (id == R.id.nav_settings) {
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.PREFERENCES);
         } else if (id == R.id.nav_about) {
@@ -101,7 +105,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         this.notificationsManager.addOrUpdateReminderNotification(reminder);
     }
 
-    public Storage getStorage() {
-        return this.storage;
+    public RemindersStorage getRemindersStorage() {
+        return this.remindersStorage;
+    }
+
+    public TodosStorage getTodosStorage() {
+        return this.todosStorage;
     }
 }

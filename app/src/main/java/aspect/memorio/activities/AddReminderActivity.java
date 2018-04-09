@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,13 +25,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import aspect.memorio.R;
+import aspect.memorio.fragments.ListFragment;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.utils.Utils;
 
-public class AddNoteActivity extends AppCompatActivity {
-
-    public static final String RESULT_INTENT_NOTE = "reminder";
-    public static final String INPUT_INTENT_NOTE = "input";
+public class AddReminderActivity extends AddItemActivity {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("d.MM.y H:m");
     // TODO: this would be better in enum
@@ -44,21 +41,23 @@ public class AddNoteActivity extends AppCompatActivity {
 
     private Reminder reminder;
 
-    public AddNoteActivity() {
+    public AddReminderActivity() {
         reminder = new Reminder();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: refactor this method
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_note);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getIntent()!= null) {
-            String inputReminderString = getIntent().getStringExtra(INPUT_INTENT_NOTE);
+        if (getIntent() != null &&  getIntent().getStringExtra(ListFragment.INTENT_ITEM) != null) {
+            String inputReminderString = getIntent().getStringExtra(ListFragment.INTENT_ITEM);
+            this.setReminder(inputReminderString);
+        } else if (savedInstanceState != null && savedInstanceState.getString(ListFragment.INTENT_ITEM) != null) {
+            String inputReminderString = savedInstanceState.getString(ListFragment.INTENT_ITEM);
             this.setReminder(inputReminderString);
         }
 
@@ -172,6 +171,12 @@ public class AddNoteActivity extends AppCompatActivity {
         this.setDefaultNotificationValue();
         this.refreshDateTimeTexts();
         this.setNotificationsEnabled(this.reminder.getDate() != null);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ListFragment.INTENT_ITEM, this.reminder.toString());
     }
 
     private void showDateDialog() {
@@ -321,7 +326,7 @@ public class AddNoteActivity extends AppCompatActivity {
         reminder.setText(text);
 
         Intent intent = new Intent();
-        intent.putExtra(RESULT_INTENT_NOTE, reminder.toString());
+        intent.putExtra(ListFragment.INTENT_ITEM, reminder.toString());
         setResult(RESULT_OK, intent);
         finish();
     }

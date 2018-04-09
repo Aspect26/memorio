@@ -16,13 +16,13 @@ import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.utils.Utils;
 
-public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
+public class RemindersListViewAdapter extends ArrayAdapter<Reminder> {
 
     private static final float MIN_OPACITY = 0.3f;
 
     private final ListRemindersFragment remindersFragment;
 
-    public NotesListViewAdapter(Context context, List<Reminder> items, ListRemindersFragment remindersFragment) {
+    public RemindersListViewAdapter(Context context, List<Reminder> items, ListRemindersFragment remindersFragment) {
         super(context, R.layout.note_item, items);
         this.remindersFragment = remindersFragment;
     }
@@ -58,11 +58,11 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             setOnClickListener(view, reminder);
 
             if (reminder.getPriority() == Reminder.PRIORITY_HIGH) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
             } else if (reminder.getPriority() == Reminder.PRIORITY_NORMAL) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
             } else if (reminder.getPriority() == Reminder.PRIORITY_LOW) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }
 
             this.setOpacity(view, reminder);
@@ -76,7 +76,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
             @Override
             public void onClick(final View view) {
                 view.setAlpha(1.0f);
-                remindersFragment.removeReminder(reminder);
+                remindersFragment.removeItem(reminder);
             }
         });
     }
@@ -85,7 +85,7 @@ public class NotesListViewAdapter extends ArrayAdapter<Reminder> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remindersFragment.editReminder(reminder);
+                remindersFragment.editItem(reminder);
             }
         });
     }
