@@ -44,9 +44,12 @@ public class AddTodoActivity extends AddItemActivity {
         Toolbar toolbar = findViewById(R.id.add_todo_toolbar);
         setSupportActionBar(toolbar);
 
-        if (getIntent() != null) {
-            String inputReminderString = getIntent().getStringExtra(ListFragment.INTENT_ITEM);
-            this.setTodo(inputReminderString);
+        if (getIntent() != null && getIntent().getStringExtra(ListFragment.INTENT_ITEM) != null) {
+            String inputTodoString = getIntent().getStringExtra(ListFragment.INTENT_ITEM);
+            this.setTodo(inputTodoString);
+        } else if (savedInstanceState != null && savedInstanceState.getString(ListFragment.INTENT_ITEM) != null) {
+            String inputTodoString = savedInstanceState.getString(ListFragment.INTENT_ITEM);
+            this.setTodo(inputTodoString);
         }
 
         Button addButton = findViewById(R.id.button_todo_done);
@@ -108,6 +111,12 @@ public class AddTodoActivity extends AddItemActivity {
 
         this.setDefaultPriorityValue();
         this.refreshDateTimeTexts();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ListFragment.INTENT_ITEM, this.todo.toString());
     }
 
     // TODO: duplicity with the add note activity

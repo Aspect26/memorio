@@ -62,7 +62,8 @@
 - Added TODOs tab\
 - Removed empty calendar tab\
 - BUGFIX: Android status bar now does not have wrong color on child activities\
-- BUGFIX: Floating action buttons are now not hidden by snackbar
+- BUGFIX: Floating action buttons are now not hidden by snackbar\
+- BUGFIX: reminder and todo are no longer reset on screen orientation change in their add activities
     </string>
     <string name="changelog_v_0_9_3_title">0.9.3 : 55 (24.03.2018 - Final Beta)</string>
     <string name="changelog_v_0_9_3_summary">

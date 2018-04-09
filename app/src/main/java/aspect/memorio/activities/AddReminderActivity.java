@@ -53,8 +53,11 @@ public class AddReminderActivity extends AddItemActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (getIntent()!= null) {
+        if (getIntent() != null &&  getIntent().getStringExtra(ListFragment.INTENT_ITEM) != null) {
             String inputReminderString = getIntent().getStringExtra(ListFragment.INTENT_ITEM);
+            this.setReminder(inputReminderString);
+        } else if (savedInstanceState != null && savedInstanceState.getString(ListFragment.INTENT_ITEM) != null) {
+            String inputReminderString = savedInstanceState.getString(ListFragment.INTENT_ITEM);
             this.setReminder(inputReminderString);
         }
 
@@ -168,6 +171,12 @@ public class AddReminderActivity extends AddItemActivity {
         this.setDefaultNotificationValue();
         this.refreshDateTimeTexts();
         this.setNotificationsEnabled(this.reminder.getDate() != null);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ListFragment.INTENT_ITEM, this.reminder.toString());
     }
 
     private void showDateDialog() {
