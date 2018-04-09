@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Memorio</string>
     <string name="app_name_develop">Memorio develop</string>
-    <string name="app_version">1.0.0:55</string>
-    <string name="app_version_long">Version: TODOs (1.0.0:68)</string>
+    <string name="app_version">1.0:76</string>
+    <string name="app_version_long">Version: TODOs (1.0:76)</string>
     <string name="app_email">flimmelj@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -57,7 +57,7 @@
     <string name="preference_key_daily_todo">notification-daily-todo</string>
     <string name="preference_key_reminders_notification">notification-reminder</string>
 
-    <string name="changelog_v_1_0_0_title">1.0.0 : 68 (DD.04.2018 - TODOs)</string>
+    <string name="changelog_v_1_0_0_title">1.0 : 76 (09.04.2018 - TODOs)</string>
     <string name="changelog_v_1_0_0_summary">
 - Added TODOs tab\
 - Removed empty calendar tab\
