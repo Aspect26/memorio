@@ -91,6 +91,7 @@
 
     <string name="snackbar_reminder_removed">Reminder removed</string>
     <string name="snackbar_todo_removed">TODO removed</string>
+    <string name="snackbar_todo_completed">TODO completed</string>
 
     <string name="done">Done</string>
     <string name="undo">Undo</string>

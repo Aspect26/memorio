@@ -36,13 +36,13 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
         if (view == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            view = vi.inflate(R.layout.note_item, null);
+            view = vi.inflate(R.layout.todo_item, null);
         }
 
         Todo todo = getItem(position);
 
         if (todo != null) {
-            TextView textView = view.findViewById(R.id.todo_text);
+            TextView textView = view.findViewById(R.id.todo_label);
             textView.setText(todo.getLabel().isEmpty()? "<empty>" : todo.getLabel());
 
             textView = view.findViewById(R.id.todo_remaining_time);
@@ -123,7 +123,7 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
         } else {
             opacity = (1 - monthsRemaining) * MIN_OPACITY + MIN_OPACITY;
         }
-        view.findViewById(R.id.todo_text).setAlpha(opacity);
+        view.findViewById(R.id.todo_label).setAlpha(opacity);
         view.findViewById(R.id.todo_remaining_time).setAlpha(opacity);
     }
 

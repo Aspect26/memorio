@@ -13,7 +13,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/todo_text"
+            android:id="@+id/todo_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
@@ -58,7 +58,7 @@
             android:layout_height="30dp"
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/ic_remove"
+            android:background="@drawable/ic_done"
             android:alpha="0.5"
             style="@style/ImageButton"/>
 

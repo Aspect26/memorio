@@ -25,6 +25,7 @@ import aspect.memorio.activities.HomeActivity;
 import aspect.memorio.activities.adapters.TodosListViewAdapter;
 import aspect.memorio.models.Todo;
 import aspect.memorio.storage.TodosStorage;
+import aspect.memorio.utils.SnackbarUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -127,24 +128,37 @@ public class ListTodosFragment extends Fragment {
         this.gotoEditTodoActivity(todo);
     }
 
+    // TODO: snackbar duplicity
     public void removeTodo(final Todo todo) {
         this.getStorage().remove(todo);
         this.reinitializeTodosView();
 
-        Snackbar undoSnackBar = Snackbar.make(getView(), R.string.snackbar_todo_removed, Snackbar.LENGTH_LONG);
-        undoSnackBar.setAction(R.string.undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getStorage().add(todo);
-                reinitializeTodosView();
-            }
-        });
-        undoSnackBar.setActionTextColor(getResources().getColor(R.color.colorPrimaryLight));
-        undoSnackBar.show();
+        if (getView() != null) {
+            SnackbarUtils.showUndoSnackbar(getView(), R.string.snackbar_todo_removed, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getStorage().add(todo);
+                    reinitializeTodosView();
+                }
+            });
+        }
     }
 
     public void completeTodo(final Todo todo) {
-        // TODO: implement
+        todo.setDone(true);
+        this.getStorage().updateOrAdd(todo);
+        this.reinitializeTodosView();
+
+        if (getView() != null) {
+            SnackbarUtils.showUndoSnackbar(getView(), R.string.snackbar_todo_completed, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    todo.setDone(false);
+                    getStorage().updateOrAdd(todo);
+                    reinitializeTodosView();
+                }
+            });
+        }
     }
 
     private void setAutomaticUpdate() {
