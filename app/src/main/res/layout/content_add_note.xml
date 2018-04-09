@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.AddNoteActivity"
+    tools:context=".activities.AddReminderActivity"
     tools:showIn="@layout/activity_add_note">
 
     <LinearLayout
