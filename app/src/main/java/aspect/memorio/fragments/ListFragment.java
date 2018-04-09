@@ -83,7 +83,7 @@ public abstract class ListFragment<T> extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (isCorrectActivityResult(requestCode, resultCode, data.getExtras())) {
+        if (isCorrectActivityResult(requestCode, resultCode, data)) {
             try {
                 this.addItemFromActivityResult(requestCode, data.getExtras());
             } catch (ParseException e) {
@@ -126,10 +126,10 @@ public abstract class ListFragment<T> extends Fragment {
         this.itemsViewAdapter.notifyDataSetChanged();
     }
 
-    private boolean isCorrectActivityResult(int requestCode, int resultCode, Bundle bundle) {
+    private boolean isCorrectActivityResult(int requestCode, int resultCode, Intent intent) {
         return resultCode == RESULT_OK
                 && (requestCode == REQUEST_ADD || requestCode == REQUEST_EDIT)
-                && (bundle != null && bundle.getString(INTENT_ITEM) != null);
+                && (intent != null && intent.getExtras() != null && intent.getExtras().getString(INTENT_ITEM) != null);
     }
 
     private void addItemFromActivityResult(int requestCode, Bundle bundle) throws ParseException {
