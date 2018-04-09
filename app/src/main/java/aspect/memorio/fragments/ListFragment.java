@@ -119,7 +119,7 @@ public abstract class ListFragment<T> extends Fragment {
         }
 
         List<T> activeItems = this.storage.getAllActive();
-        Collections.sort(this.storage.getAllActive(), this.fragmentConfig.itemsComparator);
+        Collections.sort(activeItems, this.fragmentConfig.itemsComparator);
 
         this.itemsViewAdapter.clear();
         this.itemsViewAdapter.addAll(activeItems);
