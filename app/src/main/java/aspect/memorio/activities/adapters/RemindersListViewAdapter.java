@@ -58,11 +58,11 @@ public class RemindersListViewAdapter extends ArrayAdapter<Reminder> {
             setOnClickListener(view, reminder);
 
             if (reminder.getPriority() == Reminder.PRIORITY_HIGH) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
             } else if (reminder.getPriority() == Reminder.PRIORITY_NORMAL) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
             } else if (reminder.getPriority() == Reminder.PRIORITY_LOW) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }
 
             this.setOpacity(view, reminder);

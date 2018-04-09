@@ -47,7 +47,6 @@ public class AddReminderActivity extends AddItemActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: refactor this method
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_note);

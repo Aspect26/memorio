@@ -47,8 +47,7 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
 
             textView = view.findViewById(R.id.todo_remaining_time);
             if (todo.getDate() == null) {
-                // TODO: use android resource
-                textView.setText("Not specified");
+                textView.setText(getContext().getText(R.string.not_specified_generic));
             } else {
                 textView.setText(Utils.getTimeRemainingFromNowText(todo.getDate()));
             }
@@ -63,13 +62,12 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
 
             setOnClickListener(view, todo);
 
-            // TODO: custom colors for todos
             if (todo.getPriority() == Todo.PRIORITY_HIGH) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
             } else if (todo.getPriority() == Todo.PRIORITY_NORMAL) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
             } else if (todo.getPriority() == Todo.PRIORITY_LOW) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_reminder));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }
 
             this.setOpacity(view, todo);

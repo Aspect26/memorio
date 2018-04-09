@@ -95,6 +95,7 @@
 
     <string name="done">Done</string>
     <string name="undo">Undo</string>
+    <string name="not_specified_generic">Not specified</string>
     <string name="not_specified_date">Date not specified</string>
 
 </resources>

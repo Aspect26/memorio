@@ -29,7 +29,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // TODO: refactor
         super.onCreate(savedInstanceState);
         this.remindersStorage = new DeviceFileRemindersStorage(this);
         this.remindersStorage.loadAll();
