@@ -79,7 +79,7 @@ public class Todo {
         stringBuilder.append(this.getId()).append(";");
         stringBuilder.append(this.getLabel()).append(";");
         stringBuilder.append((this.getDate() != null)? DATE_FORMAT.format(this.getDate()) : "").append(";");
-        stringBuilder.append(this.isDone()? "0" : "1").append(";");
+        stringBuilder.append(this.isDone()? "1" : "0").append(";");
         stringBuilder.append(this.getPriority());
 
         return stringBuilder.toString();

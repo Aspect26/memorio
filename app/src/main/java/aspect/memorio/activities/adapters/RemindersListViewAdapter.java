@@ -76,7 +76,7 @@ public class RemindersListViewAdapter extends ArrayAdapter<Reminder> {
             @Override
             public void onClick(final View view) {
                 view.setAlpha(1.0f);
-                remindersFragment.removeReminder(reminder);
+                remindersFragment.removeItem(reminder);
             }
         });
     }
@@ -85,7 +85,7 @@ public class RemindersListViewAdapter extends ArrayAdapter<Reminder> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                remindersFragment.editReminder(reminder);
+                remindersFragment.editItem(reminder);
             }
         });
     }

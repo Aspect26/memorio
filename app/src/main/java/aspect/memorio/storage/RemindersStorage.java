@@ -4,7 +4,7 @@ import java.util.List;
 
 import aspect.memorio.models.Reminder;
 
-public interface RemindersStorage {
+public interface RemindersStorage extends ItemsStorage<Reminder> {
 
     /**
      * Loads all the data
@@ -21,28 +21,6 @@ public interface RemindersStorage {
      * Gets all reminders for today
      */
     List<Reminder> getAllToday();
-
-    /**
-     * Gets all reminders that are not expired
-     */
-    List<Reminder> getAllNonExpired();
-
-    /**
-     * Adds the specified note to the storage
-     * @return true if successful, false otherwise
-     */
-    void addReminder(Reminder reminder);
-
-    /**
-     * Updates the specified reminder. If the reminder is not found, then adds new
-     */
-    void updateOrAddReminder(Reminder reminder);
-
-    /**
-     * Removes the specified note from the storage
-     * @return true if successful, false otherwise
-     */
-    void removeReminder(Reminder reminder);
 
     /**
      * Removes all reminders of the user

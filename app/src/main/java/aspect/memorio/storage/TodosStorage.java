@@ -4,17 +4,11 @@ import java.util.List;
 
 import aspect.memorio.models.Todo;
 
-public interface TodosStorage {
+public interface TodosStorage extends ItemsStorage<Todo> {
 
     boolean loadAll();
 
     List<Todo> getAll();
-
-    List<Todo> getAllActive();
-
-    void add(Todo todo);
-
-    void updateOrAdd(Todo todo);
 
     void remove(Todo todo);
 

@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,6 +24,11 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
     public DeviceFileRemindersStorage(Context context) {
         this.context = context;
         this.data = new ArrayList<>();
+    }
+
+    @Override
+    public Reminder createNewItemFromString(String dataString) throws ParseException {
+        return Reminder.createFromString(dataString);
     }
 
     @Override
@@ -80,7 +86,7 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
     }
 
     @Override
-    public List<Reminder> getAllNonExpired() {
+    public List<Reminder> getAllActive() {
         List<Reminder> nonExpiredReminders = new ArrayList<>();
         for (Reminder reminder : this.data) {
             if (reminder.getDate() == null) {
@@ -103,16 +109,16 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
     }
 
     @Override
-    public void addReminder(Reminder reminder) {
+    public void add(Reminder reminder) {
         this.data.add(reminder);
         this.flushAll();
     }
 
     @Override
-    public void updateOrAddReminder(Reminder updatedReminder) {
+    public void updateOrAdd(Reminder updatedReminder) {
         Reminder oldReminder = this.findReminder(updatedReminder.getId());
         if (oldReminder == null) {
-            this.addReminder(updatedReminder);
+            this.add(updatedReminder);
         } else {
             oldReminder.setDate(updatedReminder.getDate());
             oldReminder.setNotificationDate(updatedReminder.getNotificationDate());
@@ -123,7 +129,7 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
     }
 
     @Override
-    public void removeReminder(Reminder reminder) {
+    public void remove(Reminder reminder) {
         for (int index = 0; index < this.data.size(); ++index) {
             if (this.data.get(index).getId().equals(reminder.getId())) {
                 this.data.remove(index);

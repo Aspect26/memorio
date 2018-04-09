@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,6 +24,11 @@ public class DeviceFileTODOsStorage implements TodosStorage {
     public DeviceFileTODOsStorage(Context context) {
         this.context = context;
         this.data = new ArrayList<>();
+    }
+
+    @Override
+    public Todo createNewItemFromString(String dataString) throws ParseException {
+        return Todo.createFromString(dataString);
     }
 
     // TODO: duplicity with the other storage
