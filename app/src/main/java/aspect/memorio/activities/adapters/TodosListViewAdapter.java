@@ -83,7 +83,7 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
             @Override
             public void onClick(final View view) {
                 view.setAlpha(1.0f);
-                todosFragment.removeTodo(todo);
+                todosFragment.removeItem(todo);
             }
         });
     }
@@ -102,7 +102,7 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                todosFragment.editTodo(todo);
+                todosFragment.editItem(todo);
             }
         });
     }

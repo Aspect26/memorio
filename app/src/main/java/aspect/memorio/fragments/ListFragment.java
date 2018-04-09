@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 import aspect.memorio.R;
 import aspect.memorio.activities.HomeActivity;
-import aspect.memorio.fragments.utils.ListFragmentConfig;
+import aspect.memorio.fragments.config.ListFragmentConfig;
 import aspect.memorio.storage.ItemsStorage;
 import aspect.memorio.utils.SnackbarUtils;
 
@@ -31,18 +31,17 @@ public abstract class ListFragment<T> extends Fragment {
     public static final int REQUEST_ADD = 1;
     public static final int REQUEST_EDIT = 2;
 
-    public static final String INTENT_ITEM_INPUT = "item";
+    public static final String INTENT_ITEM = "item";
 
-    private static final int AUTOMATIC_UPDATE_INTERVAL_IN_MILIS = 30 * 1000;
+    private static final int AUTOMATIC_UPDATE_INTERVAL_IN_MILLIS = 30 * 1000;
 
+    protected ItemsStorage<T> storage;
+    protected HomeActivity homeActivity;
     private final ListFragmentConfig<T> fragmentConfig;
-    private final ItemsStorage<T> storage;
     private ArrayAdapter<T> itemsViewAdapter;
-    private HomeActivity homeActivity;
 
-    public ListFragment(ListFragmentConfig<T> fragmentConfig, ItemsStorage<T> storage) {
+    public ListFragment(ListFragmentConfig<T> fragmentConfig) {
         this.fragmentConfig = fragmentConfig;
-        this.storage = storage;
     }
 
     @Override
@@ -56,7 +55,8 @@ public abstract class ListFragment<T> extends Fragment {
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setTitle(this.fragmentConfig.title);
 
         this.homeActivity = (HomeActivity) getActivity();
-        this.itemsViewAdapter = this.fragmentConfig.itemsViewAdapter;
+        this.storage = this.getStorage();
+        this.itemsViewAdapter = this.fragmentConfig.itemsViewAdapterCreator.createAdapter(this);
 
         FloatingActionButton fab = view.findViewById(this.fragmentConfig.add_button);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -67,9 +67,10 @@ public abstract class ListFragment<T> extends Fragment {
         });
 
         ListView itemsListView = view.findViewById(this.fragmentConfig.list_view);
-        itemsListView.setAdapter(this.fragmentConfig.itemsViewAdapter);
+        itemsListView.setAdapter(this.itemsViewAdapter);
 
         this.setAutomaticUpdate();
+        this.reinitializeItemsView();
 
         return view;
     }
@@ -86,7 +87,7 @@ public abstract class ListFragment<T> extends Fragment {
             try {
                 this.addItemFromActivityResult(requestCode, data.getExtras());
             } catch (ParseException e) {
-                Log.w("[ListFragment]", String.format("Could not instantiate item from %s", data.getExtras().getString(INTENT_ITEM_INPUT)));
+                Log.w("[ListFragment]", String.format("Could not instantiate item from %s", data.getExtras().getString(INTENT_ITEM)));
             }
         }
     }
@@ -110,14 +111,29 @@ public abstract class ListFragment<T> extends Fragment {
         }
     }
 
+    protected abstract ItemsStorage<T> getStorage();
+
+    protected void reinitializeItemsView() {
+        if (this.storage == null) {
+            return;
+        }
+
+        List<T> activeItems = this.storage.getAllActive();
+        Collections.sort(this.storage.getAllActive(), this.fragmentConfig.itemsComparator);
+
+        this.itemsViewAdapter.clear();
+        this.itemsViewAdapter.addAll(activeItems);
+        this.itemsViewAdapter.notifyDataSetChanged();
+    }
+
     private boolean isCorrectActivityResult(int requestCode, int resultCode, Bundle bundle) {
         return resultCode == RESULT_OK
                 && (requestCode == REQUEST_ADD || requestCode == REQUEST_EDIT)
-                && (bundle != null && bundle.getString(INTENT_ITEM_INPUT) == null);
+                && (bundle != null && bundle.getString(INTENT_ITEM) != null);
     }
 
     private void addItemFromActivityResult(int requestCode, Bundle bundle) throws ParseException {
-        String dataString = bundle.getString(INTENT_ITEM_INPUT);
+        String dataString = bundle.getString(INTENT_ITEM);
         T item = this.storage.createNewItemFromString(dataString);
         if (requestCode == REQUEST_ADD) {
             this.addItem(item);
@@ -139,20 +155,7 @@ public abstract class ListFragment<T> extends Fragment {
                 });
             }
         };
-        timer.scheduleAtFixedRate(task, AUTOMATIC_UPDATE_INTERVAL_IN_MILIS, AUTOMATIC_UPDATE_INTERVAL_IN_MILIS);
-    }
-
-    private void reinitializeItemsView() {
-        if (this.storage == null) {
-            return;
-        }
-
-        List<T> activeItems = this.storage.getAllActive();
-        Collections.sort(this.storage.getAllActive(), this.fragmentConfig.itemsComparator);
-
-        this.itemsViewAdapter.clear();
-        this.itemsViewAdapter.addAll(activeItems);
-        this.itemsViewAdapter.notifyDataSetChanged();
+        timer.scheduleAtFixedRate(task, AUTOMATIC_UPDATE_INTERVAL_IN_MILLIS, AUTOMATIC_UPDATE_INTERVAL_IN_MILLIS);
     }
 
     private void addItem(T item) {
@@ -167,7 +170,7 @@ public abstract class ListFragment<T> extends Fragment {
 
     private void gotoEditItemActivity(T item) {
         Intent intent = new Intent(homeActivity, this.fragmentConfig.addItemActivity);
-        intent.putExtra(INTENT_ITEM_INPUT, item.toString());
+        intent.putExtra(INTENT_ITEM, item.toString());
         startActivityForResult(intent, REQUEST_EDIT);
     }
 

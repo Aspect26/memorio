@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,13 +22,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import aspect.memorio.R;
+import aspect.memorio.fragments.ListFragment;
 import aspect.memorio.models.Todo;
 import aspect.memorio.utils.Utils;
 
 public class AddTodoActivity extends AddItemActivity {
-
-    public static final String RESULT_INTENT_TODO = "todo";
-    public static final String INPUT_INTENT_TODO = "input_todo";
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("d.MM.y H:m");
 
@@ -49,7 +46,7 @@ public class AddTodoActivity extends AddItemActivity {
         setSupportActionBar(toolbar);
 
         if (getIntent() != null) {
-            String inputReminderString = getIntent().getStringExtra(INPUT_INTENT_TODO);
+            String inputReminderString = getIntent().getStringExtra(ListFragment.INTENT_ITEM);
             this.setTodo(inputReminderString);
         }
 
@@ -207,7 +204,7 @@ public class AddTodoActivity extends AddItemActivity {
         todo.setLabel(text);
 
         Intent intent = new Intent();
-        intent.putExtra(RESULT_INTENT_TODO, todo.toString());
+        intent.putExtra(ListFragment.INTENT_ITEM, todo.toString());
         setResult(RESULT_OK, intent);
         finish();
     }
