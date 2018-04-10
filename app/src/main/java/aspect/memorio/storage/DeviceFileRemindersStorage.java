@@ -124,8 +124,8 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
             oldReminder.setNotificationDate(updatedReminder.getNotificationDate());
             oldReminder.setText(updatedReminder.getText());
             oldReminder.setPriority(updatedReminder.getPriority());
-            this.flushAll();
         }
+        this.flushAll();
     }
 
     @Override

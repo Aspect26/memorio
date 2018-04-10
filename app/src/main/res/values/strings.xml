@@ -10,6 +10,7 @@
 
     <string name="nav_menu_reminders">Reminders</string>
     <string name="nav_menu_todos">TODOs</string>
+    <string name="nav_menu_purchases">Purchases</string>
     <string name="nav_menu_calendar">Calendar</string>
     <string name="nav_menu_preferences">Preferences</string>
     <string name="nav_menu_help">Help</string>
@@ -18,6 +19,7 @@
 
     <string name="toolbar_title_list_reminders">Reminders List</string>
     <string name="toolbar_title_list_todos">TODOs list</string>
+    <string name="toolbar_title_list_purchases">Purchases list</string>
     <string name="toolbar_title_calendar">Reminders Calendar</string>
     <string name="toolbar_title_preferences">Preferences</string>
     <string name="toolbar_title_changelog">ChangeLog</string>
@@ -27,6 +29,7 @@
 
     <string name="title_activity_add_note">New Reminder</string>
     <string name="title_activity_add_todo">New Todo</string>
+    <string name="title_activity_add_purchase">New Purchase</string>
 
     <string name="add_note_text">Note text</string>
     <string name="add_note_add_button">Add</string>
@@ -45,6 +48,9 @@
     <string name="add_note_notification_week_before">1 Week before</string>
 
     <string name="add_todo_label">Todo label</string>
+
+    <string name="add_purchase_label">Purchase label</string>
+    <string name="add_purchase_cost">Purchase cost</string>
 
     <string name="about_made_by">Made by: Julius Flimmel</string>
     <string name="about_contact">Contact: flimmelj@gmail.com</string>
@@ -101,6 +107,7 @@
 
     <string name="snackbar_reminder_removed">Reminder removed</string>
     <string name="snackbar_todo_removed">TODO removed</string>
+    <string name="snackbar_purchase_removed">Purchase removed</string>
     <string name="snackbar_todo_completed">TODO completed</string>
 
     <string name="done">Done</string>

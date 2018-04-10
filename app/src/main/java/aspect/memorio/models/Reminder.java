@@ -75,6 +75,7 @@ public class Reminder {
         this.priority = priority;
     }
 
+    // TODO: these serialization method should definitely be in the Serialization class
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
