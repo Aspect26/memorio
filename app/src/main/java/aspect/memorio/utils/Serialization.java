@@ -23,7 +23,7 @@ public class Serialization {
         stringBuilder.append(purchase.getLabel()).append(";");
         stringBuilder.append(purchase.getCost()).append(";");
         stringBuilder.append(serializeBool(purchase.isBought())).append(";");
-        stringBuilder.append(purchase.getPriority());
+        stringBuilder.append(purchase.getPriority().value);
 
         return stringBuilder.toString();
     }
@@ -35,7 +35,7 @@ public class Serialization {
         stringBuilder.append((reminder.getDate() != null)? DATE_FORMAT.format(reminder.getDate()) : "").append(";");
         stringBuilder.append((reminder.getNotificationDate() != null)? DATE_FORMAT.format(reminder.getNotificationDate()) : "").append(";");
         stringBuilder.append(reminder.getId()).append(";");
-        stringBuilder.append(reminder.getPriority());
+        stringBuilder.append(reminder.getPriority().value);
 
         return stringBuilder.toString();
     }
@@ -47,7 +47,7 @@ public class Serialization {
         stringBuilder.append(todo.getLabel()).append(";");
         stringBuilder.append((todo.getDate() != null)? DATE_FORMAT.format(todo.getDate()) : "").append(";");
         stringBuilder.append(todo.isDone()? "1" : "0").append(";");
-        stringBuilder.append(todo.getPriority());
+        stringBuilder.append(todo.getPriority().value);
 
         return stringBuilder.toString();
     }

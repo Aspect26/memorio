@@ -6,6 +6,7 @@ import aspect.memorio.R;
 import aspect.memorio.fragments.config.TodoFragmentConfig;
 import aspect.memorio.models.Todo;
 import aspect.memorio.storage.ItemsStorage;
+import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.SnackbarUtils;
 
 public class ListTodosFragment extends ListFragment<Todo> {
@@ -34,5 +35,10 @@ public class ListTodosFragment extends ListFragment<Todo> {
     @Override
     protected ItemsStorage<Todo> getStorage() {
         return this.homeActivity.getTodosStorage();
+    }
+
+    @Override
+    protected String serializeItem(Todo item) {
+        return Serialization.serializeTodo(item);
     }
 }

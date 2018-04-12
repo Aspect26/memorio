@@ -113,6 +113,8 @@ public abstract class ListFragment<T> extends Fragment {
 
     protected abstract ItemsStorage<T> getStorage();
 
+    protected abstract String serializeItem(T item);
+
     protected void reinitializeView() {
         if (this.storage == null) {
             return;
@@ -170,7 +172,7 @@ public abstract class ListFragment<T> extends Fragment {
 
     private void gotoEditItemActivity(T item) {
         Intent intent = new Intent(homeActivity, this.fragmentConfig.addItemActivity);
-        intent.putExtra(INTENT_ITEM, item.toString());
+        intent.putExtra(INTENT_ITEM, this.serializeItem(item));
         startActivityForResult(intent, REQUEST_EDIT);
     }
 

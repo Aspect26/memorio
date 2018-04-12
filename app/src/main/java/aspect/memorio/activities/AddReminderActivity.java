@@ -67,7 +67,7 @@ public class AddReminderActivity extends AddItemActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveNoteAndExit();
+                saveReminderAndExit();
             }
         });
 
@@ -87,7 +87,7 @@ public class AddReminderActivity extends AddItemActivity {
             }
         });
 
-        EditText textEditor = findViewById(R.id.edit_text_new_note_text);
+        EditText textEditor = findViewById(R.id.edit_text_new_reminder_text);
         textEditor.setText(this.reminder != null? this.reminder.getText() : "");
 
         RadioButton highPriorityButton = findViewById(R.id.radio_priority_high);
@@ -178,7 +178,7 @@ public class AddReminderActivity extends AddItemActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ListFragment.INTENT_ITEM, this.reminder.toString());
+        outState.putString(ListFragment.INTENT_ITEM, Serialization.serializeReminder(this.reminder));
     }
 
     private void showDateDialog() {
@@ -323,12 +323,12 @@ public class AddReminderActivity extends AddItemActivity {
         );
     }
 
-    private void saveNoteAndExit() {
-        final String text = ((EditText) findViewById(R.id.edit_text_new_note_text)).getText().toString();
+    private void saveReminderAndExit() {
+        final String text = ((EditText) findViewById(R.id.edit_text_new_reminder_text)).getText().toString();
         reminder.setText(text);
 
         Intent intent = new Intent();
-        intent.putExtra(ListFragment.INTENT_ITEM, reminder.toString());
+        intent.putExtra(ListFragment.INTENT_ITEM, Serialization.serializeReminder(reminder));
         setResult(RESULT_OK, intent);
         finish();
     }

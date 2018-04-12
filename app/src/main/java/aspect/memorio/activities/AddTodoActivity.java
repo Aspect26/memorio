@@ -118,7 +118,7 @@ public class AddTodoActivity extends AddItemActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ListFragment.INTENT_ITEM, this.todo.toString());
+        outState.putString(ListFragment.INTENT_ITEM, Serialization.serializeTodo(this.todo));
     }
 
     // TODO: duplicity with the add note activity
@@ -214,7 +214,7 @@ public class AddTodoActivity extends AddItemActivity {
         todo.setLabel(text);
 
         Intent intent = new Intent();
-        intent.putExtra(ListFragment.INTENT_ITEM, todo.toString());
+        intent.putExtra(ListFragment.INTENT_ITEM, Serialization.serializeTodo(this.todo));
         setResult(RESULT_OK, intent);
         finish();
     }

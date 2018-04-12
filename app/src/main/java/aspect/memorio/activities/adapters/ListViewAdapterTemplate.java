@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import aspect.memorio.R;
@@ -38,8 +38,8 @@ public abstract class ListViewAdapterTemplate<T> extends ArrayAdapter<T> {
         final T item = getItem(position);
 
         if (item != null) {
-            this.setTextView(view);
-            this.setAdditionalTextView(view);
+            this.setTextView(view, item);
+            this.setAdditionalTextView(view, item);
             this.setRemoveButtonAction(view, item);
             this.setItemClickListener(view, item);
             this.setBackgroundColor(view, item);
@@ -50,9 +50,9 @@ public abstract class ListViewAdapterTemplate<T> extends ArrayAdapter<T> {
         return view;
     }
 
-    protected abstract String getItemText();
+    protected abstract String getItemText(T item);
 
-    protected abstract String getItemAdditionalText();
+    protected abstract String getItemAdditionalText(T item);
 
     protected abstract int getItemBackgroundColorResource(T item);
 
@@ -71,15 +71,15 @@ public abstract class ListViewAdapterTemplate<T> extends ArrayAdapter<T> {
         return inflater.inflate(this.config.layout, null);
     }
 
-    private void setTextView(View itemView) {
+    private void setTextView(View itemView, T item) {
         TextView textView = itemView.findViewById(this.config.text);
-        textView.setText(this.getItemText().isEmpty()? this.fragment.getString(R.string.empty_string) : this.getItemText());
+        textView.setText(this.getItemText(item).isEmpty()? this.fragment.getString(R.string.empty_string) : this.getItemText(item));
     }
 
-    private void setAdditionalTextView(View itemView) {
+    private void setAdditionalTextView(View itemView, T item) {
         TextView additionalTextView = itemView.findViewById(this.config.additionalText);
-        additionalTextView.setText(this.getItemAdditionalText().isEmpty()?
-                this.fragment.getText(R.string.empty_string): this.getItemAdditionalText());
+        additionalTextView.setText(this.getItemAdditionalText(item).isEmpty()?
+                this.fragment.getText(R.string.empty_string): this.getItemAdditionalText(item));
 
     }
 
@@ -111,8 +111,8 @@ public abstract class ListViewAdapterTemplate<T> extends ArrayAdapter<T> {
 
     private void setOpacity(View view, T item) {
         float opacity = this.getTextOpacity(item);
-        view.findViewById(R.id.note_text).setAlpha(opacity);
-        view.findViewById(R.id.note_remaining_time).setAlpha(opacity);
+        view.findViewById(R.id.reminder_text).setAlpha(opacity);
+        view.findViewById(R.id.reminder_remaining_time).setAlpha(opacity);
     }
 
     protected int getPriorityColor(Priority priority) {

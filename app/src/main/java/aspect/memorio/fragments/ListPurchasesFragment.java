@@ -1,6 +1,5 @@
 package aspect.memorio.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -10,6 +9,7 @@ import aspect.memorio.R;
 import aspect.memorio.fragments.config.PurchasesFragmentConfig;
 import aspect.memorio.models.Purchase;
 import aspect.memorio.storage.PurchasesStorage;
+import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.SnackbarUtils;
 
 public class ListPurchasesFragment extends ListFragment<Purchase> {
@@ -20,6 +20,11 @@ public class ListPurchasesFragment extends ListFragment<Purchase> {
 
     protected PurchasesStorage getStorage() {
         return this.homeActivity.getPurchasesStorage();
+    }
+
+    @Override
+    protected String serializeItem(Purchase item) {
+        return Serialization.serializePurchase(item);
     }
 
     public void buyPurchase(final Purchase purchase) {
