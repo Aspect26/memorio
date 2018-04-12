@@ -59,8 +59,10 @@ public class ListPurchasesFragment extends ListFragment<Purchase> {
 
         int accentColor = getActivity().getResources().getColor(R.color.colorAccent);
 
-        // TODO: currency name from strings
-        String text = String.format("Total cost: <font color='#%s'> %d CZK</font>.", Integer.toHexString(accentColor).substring(2), ((PurchasesStorage) this.storage).getPriceOfAllActiveItems());
+        String text = String.format(java.util.Locale.getDefault(), "Total cost: <font color='#%s'> %d %s</font>.",
+                Integer.toHexString(accentColor).substring(2), ((PurchasesStorage) this.storage).getPriceOfAllActiveItems(),
+                getActivity().getResources().getString(R.string.currency));
+
         statusBas.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
     }
 }

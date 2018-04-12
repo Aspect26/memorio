@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import aspect.memorio.models.Todo;
+import aspect.memorio.utils.Serialization;
 
 public class DeviceFileTODOsStorage implements TodosStorage {
 
@@ -28,7 +29,7 @@ public class DeviceFileTODOsStorage implements TodosStorage {
 
     @Override
     public Todo createNewItemFromString(String dataString) throws ParseException {
-        return Todo.createFromString(dataString);
+        return Serialization.deserializeTodo(dataString);
     }
 
     // TODO: duplicity with the other storage
@@ -45,7 +46,7 @@ public class DeviceFileTODOsStorage implements TodosStorage {
             this.data.clear();
 
             while (line != null) {
-                Todo todo = Todo.createFromString(line);
+                Todo todo = Serialization.deserializeTodo(line);
                 if (todo != null) {
                     this.data.add(todo);
                 }
@@ -132,7 +133,7 @@ public class DeviceFileTODOsStorage implements TodosStorage {
             outputStream = new FileOutputStream(file);
 
             for (Todo todo : this.data) {
-                outputStream.write(todo.toString().getBytes());
+                outputStream.write(Serialization.serializeTodo(todo).getBytes());
                 outputStream.write("\n".getBytes());
             }
             outputStream.close();

@@ -24,6 +24,7 @@ import java.util.Calendar;
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListFragment;
 import aspect.memorio.models.Todo;
+import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.Utils;
 
 public class AddTodoActivity extends AddItemActivity {
@@ -190,7 +191,7 @@ public class AddTodoActivity extends AddItemActivity {
     private void setTodo(String todoString) {
         if (todoString != null) {
             try {
-                this.todo = Todo.createFromString(todoString);
+                this.todo = Serialization.deserializeTodo(todoString);
             } catch (ParseException ignored) {
 
             }

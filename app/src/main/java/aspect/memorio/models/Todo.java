@@ -12,8 +12,6 @@ public class Todo {
     public static final int PRIORITY_NORMAL = 20;
     public static final int PRIORITY_HIGH = 30;
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("y-MMMM-d-H-m-s");
-
     private String id;
     private String label;
     private Date date;
@@ -70,34 +68,6 @@ public class Todo {
 
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        stringBuilder.append(this.getId()).append(";");
-        stringBuilder.append(this.getLabel()).append(";");
-        stringBuilder.append((this.getDate() != null)? DATE_FORMAT.format(this.getDate()) : "").append(";");
-        stringBuilder.append(this.isDone()? "1" : "0").append(";");
-        stringBuilder.append(this.getPriority());
-
-        return stringBuilder.toString();
-    }
-
-    public static Todo createFromString(String line) throws ParseException {
-        String[] data = line.split(";", -1);
-        String id = data[0];
-        String label = data[1];
-        String dateText = data[2];
-        String doneText = data[3];
-        String priorityText = data[4];
-
-        java.util.Date date = (dateText != null && dateText.length() > 0)? DATE_FORMAT.parse(dateText) : null;
-        boolean done = doneText.equals("1");
-        int priority = Integer.parseInt(priorityText);
-
-        return new Todo(id, label, date, done, priority);
     }
 
 }

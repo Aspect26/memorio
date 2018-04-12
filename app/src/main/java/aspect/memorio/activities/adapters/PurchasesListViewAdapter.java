@@ -42,15 +42,13 @@ public class PurchasesListViewAdapter extends ArrayAdapter<Purchase> {
 
         if (purchase != null) {
             TextView textView = view.findViewById(R.id.purchase_label);
-            // TODO: "<empty>" from resources ...
-            textView.setText(purchase.getLabel().isEmpty()? "<empty>" : purchase.getLabel());
+            textView.setText(purchase.getLabel().isEmpty()? this.fragment.getText(R.string.empty_string) : purchase.getLabel());
 
             textView = view.findViewById(R.id.purchase_cost);
             if (purchase.getCost() < 0) {
                 textView.setText(getContext().getText(R.string.not_specified_generic));
             } else {
-                // TODO: use resource string for CZK
-                textView.setText(purchase.getCost() + " CZK");
+                textView.setText(purchase.getCost() + " " + this.fragment.getText(R.string.currency));
             }
 
             Button removeButton = view.findViewById(R.id.button_delete_purchase);

@@ -66,7 +66,7 @@
     <string name="changelog_v_1_1_title">1.1 : 76 (DD.MM.2018 - Purchases)</string>
     <string name="changelog_v_1_1_summary">
 - Added purchases tab\
-- Added status bars
+- Added status bar to purchases tab
     </string>
 
     <string name="changelog_v_1_0_title">1.0 : 76 (08.04.2018 - TODOs)</string>
@@ -115,9 +115,12 @@
 
     <string name="status_bar_default">Status Bar</string>
 
+    <string name="empty_string">__empty__</string>
     <string name="done">Done</string>
     <string name="undo">Undo</string>
     <string name="not_specified_generic">Not specified</string>
     <string name="not_specified_date">Date not specified</string>
+
+    <string name="currency">CZK</string>
 
 </resources>

@@ -27,6 +27,7 @@ import java.util.Calendar;
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListFragment;
 import aspect.memorio.models.Reminder;
+import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.Utils;
 
 public class AddReminderActivity extends AddItemActivity {
@@ -292,7 +293,7 @@ public class AddReminderActivity extends AddItemActivity {
     private void setReminder(String reminderString) {
         if (reminderString != null) {
             try {
-                this.reminder = Reminder.createFromString(reminderString);
+                this.reminder = Serialization.deserializeReminder(reminderString);
             } catch (ParseException ignored) {
 
             }

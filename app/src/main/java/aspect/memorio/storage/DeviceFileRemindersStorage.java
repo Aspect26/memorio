@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import aspect.memorio.models.Reminder;
+import aspect.memorio.utils.Serialization;
 
 public class DeviceFileRemindersStorage implements RemindersStorage {
 
@@ -28,7 +29,7 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
 
     @Override
     public Reminder createNewItemFromString(String dataString) throws ParseException {
-        return Reminder.createFromString(dataString);
+        return Serialization.deserializeReminder(dataString);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
             this.data.clear();
 
             while (line != null) {
-                Reminder note = Reminder.createFromString(line);
+                Reminder note = Serialization.deserializeReminder(line);
                 if (note != null) {
                     this.data.add(note);
                 }
@@ -153,8 +154,8 @@ public class DeviceFileRemindersStorage implements RemindersStorage {
             File file = new File(context.getFilesDir(), FILE_NAME);
             outputStream = new FileOutputStream(file);
 
-            for (Reminder note : this.data) {
-                outputStream.write(note.toString().getBytes());
+            for (Reminder reminder : this.data) {
+                outputStream.write(Serialization.serializeReminder(reminder).getBytes());
                 outputStream.write("\n".getBytes());
             }
             outputStream.close();
