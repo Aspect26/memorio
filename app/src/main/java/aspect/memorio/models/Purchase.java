@@ -4,18 +4,13 @@ import java.util.UUID;
 
 public class Purchase {
 
-    // TODO: move priorities to custom class
-    public static final int PRIORITY_LOW = 10;
-    public static final int PRIORITY_NORMAL = 20;
-    public static final int PRIORITY_HIGH = 30;
-
     private String id;
     private String label;
     private boolean bought;
     private int cost;
-    private int priority;
+    private Priority priority;
 
-    public Purchase(String id, String label, boolean bought, int cost, int priority) {
+    public Purchase(String id, String label, boolean bought, int cost, Priority priority) {
         this.id = id;
         this.label = label;
         this.bought = bought;
@@ -24,7 +19,7 @@ public class Purchase {
     }
 
     public Purchase(){
-        this(UUID.randomUUID().toString(), "", false, 0, PRIORITY_NORMAL);
+        this(UUID.randomUUID().toString(), "", false, 0, Priority.MEDIUM);
     }
 
     public String getId() {
@@ -59,11 +54,12 @@ public class Purchase {
         this.cost = cost;
     }
 
-    public int getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
+
 }

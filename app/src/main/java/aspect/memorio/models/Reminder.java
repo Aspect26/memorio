@@ -1,22 +1,17 @@
 package aspect.memorio.models;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.UUID;
 
 public class Reminder {
 
-    public static final int PRIORITY_LOW = 10;
-    public static final int PRIORITY_NORMAL = 20;
-    public static final int PRIORITY_HIGH = 30;
-
     private String id;
     private String text;
     private Date date;
     private Date notificationDate;
-    private int priority;
+    private Priority priority;
 
-    public Reminder(final String id, final String text, final Date date, final Date notificationDate, final int priority) {
+    public Reminder(final String id, final String text, final Date date, final Date notificationDate, final Priority priority) {
         this.id = id;
         this.text = text;
         this.date = date;
@@ -24,12 +19,12 @@ public class Reminder {
         this.priority = priority;
     }
 
-    public Reminder(String text, Date date, Date notificationDate, int priority) {
+    public Reminder(String text, Date date, Date notificationDate, Priority priority) {
         this(UUID.randomUUID().toString(), text, date, notificationDate, priority);
     }
 
     public Reminder() {
-        this("", null, null, PRIORITY_NORMAL);
+        this("", null, null, Priority.MEDIUM);
     }
 
     public String getId() {
@@ -64,11 +59,11 @@ public class Reminder {
         this.notificationDate = notificationDate;
     }
 
-    public int getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 

@@ -1,24 +1,17 @@
 package aspect.memorio.models;
 
 import java.util.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class Todo {
-
-    public static final int PRIORITY_LOW = 10;
-    public static final int PRIORITY_NORMAL = 20;
-    public static final int PRIORITY_HIGH = 30;
 
     private String id;
     private String label;
     private Date date;
     private boolean done;
-    private int priority;
+    private Priority priority;
 
-    public Todo(String id, String label, Date date, boolean done, int priority) {
+    public Todo(String id, String label, Date date, boolean done, Priority priority) {
         this.id = id;
         this.label = label;
         this.date = date;
@@ -27,7 +20,7 @@ public class Todo {
     }
 
     public Todo() {
-        this(UUID.randomUUID().toString(), "", null, false, PRIORITY_NORMAL);
+        this(UUID.randomUUID().toString(), "", null, false, Priority.MEDIUM);
     }
 
     public String getId() {
@@ -62,11 +55,11 @@ public class Todo {
         this.done = done;
     }
 
-    public int getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 

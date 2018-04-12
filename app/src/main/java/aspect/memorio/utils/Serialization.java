@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Purchase;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.models.Todo;
@@ -59,7 +60,7 @@ public class Serialization {
         boolean bought = deserializeBool(data[3]);
         int priority = Integer.parseInt(data[4]);
 
-        return new Purchase(id, label, bought, cost, priority);
+        return new Purchase(id, label, bought, cost, Priority.get(priority));
     }
 
     public static Reminder deserializeReminder(String dataString) throws ParseException {
@@ -73,9 +74,9 @@ public class Serialization {
         Date date = (dateText != null && dateText.length() > 0)? DATE_FORMAT.parse(dateText) : null;
         Date notificationDate = (notificationDateText != null && notificationDateText.length() > 0)? DATE_FORMAT.parse(notificationDateText) : null;
         id = id.isEmpty()? UUID.randomUUID().toString() : id;
-        int priorityValue = priority.isEmpty()? Reminder.PRIORITY_NORMAL : Integer.parseInt(priority);
+        int priorityValue = priority.isEmpty()? Priority.MEDIUM.value : Integer.parseInt(priority);
 
-        return new Reminder(id, text, date, notificationDate, priorityValue);
+        return new Reminder(id, text, date, notificationDate, Priority.get(priorityValue));
     }
 
     public static Todo deserializeTodo(String dataString) throws ParseException {
@@ -90,7 +91,7 @@ public class Serialization {
         boolean done = doneText.equals("1");
         int priority = Integer.parseInt(priorityText);
 
-        return new Todo(id, label, date, done, priority);
+        return new Todo(id, label, date, done, Priority.get(priority));
     }
 
     private static String serializeBool(boolean value) {
