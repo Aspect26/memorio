@@ -117,6 +117,18 @@ public class DeviceFilePurchasesStorage implements PurchasesStorage {
         this.flushAll();
     }
 
+    @Override
+    public int getPriceOfAllActiveItems() {
+        List<Purchase> activeItems = this.getAllActive();
+
+        int totalPrice = 0;
+        for (Purchase purchase : activeItems) {
+            totalPrice += purchase.getCost();
+        }
+
+        return totalPrice;
+    }
+
     private Purchase findOne(String id) {
         for (Purchase purchase : this.data) {
             if (purchase.getId().equals(id)) {

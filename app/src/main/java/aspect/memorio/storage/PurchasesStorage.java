@@ -8,4 +8,6 @@ public interface PurchasesStorage extends ItemsStorage<Purchase> {
 
     void flushAll();
 
+    int getPriceOfAllActiveItems();
+
 }

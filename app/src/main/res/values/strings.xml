@@ -63,8 +63,10 @@
     <string name="preference_key_daily_todo">notification-daily-todo</string>
     <string name="preference_key_reminders_notification">notification-reminder</string>
 
-    <string name="changelog_v_1_1_title">1.1 : 76 (DD.MM.2018 - Books)</string>
+    <string name="changelog_v_1_1_title">1.1 : 76 (DD.MM.2018 - Purchases)</string>
     <string name="changelog_v_1_1_summary">
+- Added purchases tab\
+- Added status bars
     </string>
 
     <string name="changelog_v_1_0_title">1.0 : 76 (08.04.2018 - TODOs)</string>
@@ -110,6 +112,8 @@
     <string name="snackbar_purchase_removed">Item removed</string>
     <string name="snackbar_todo_completed">TODO completed</string>
     <string name="snackbar_purchase_bought">Item bought</string>
+
+    <string name="status_bar_default">Status Bar</string>
 
     <string name="done">Done</string>
     <string name="undo">Undo</string>
