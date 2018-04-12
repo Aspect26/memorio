@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Purchase;
 import aspect.memorio.utils.Serialization;
 
@@ -57,7 +58,7 @@ public class AddPurchaseActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    purchase.setPriority(Purchase.PRIORITY_HIGH);
+                    purchase.setPriority(Priority.HIGH);
                 }
             }
         });
@@ -67,7 +68,7 @@ public class AddPurchaseActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    purchase.setPriority(Purchase.PRIORITY_NORMAL);
+                    purchase.setPriority(Priority.MEDIUM);
                 }
             }
         });
@@ -77,12 +78,12 @@ public class AddPurchaseActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    purchase.setPriority(Purchase.PRIORITY_LOW);
+                    purchase.setPriority(Priority.LOW);
                 }
             }
         });
 
-        this.setDefaultPriorityValue();
+        this.setInitialPriorityValue();
     }
 
     @Override
@@ -91,14 +92,14 @@ public class AddPurchaseActivity extends AddItemActivity {
         outState.putString(ListFragment.INTENT_ITEM, Serialization.serializePurchase(this.purchase));
     }
 
-    private void setDefaultPriorityValue() {
+    private void setInitialPriorityValue() {
         if (this.purchase != null) {
             switch (this.purchase.getPriority()) {
-                case Purchase.PRIORITY_HIGH:
+                case HIGH:
                     ((RadioButton) findViewById(R.id.radio_purchase_priority_high)).setChecked(true); break;
-                case Purchase.PRIORITY_NORMAL:
+                case MEDIUM:
                     ((RadioButton) findViewById(R.id.radio_purchase_priority_normal)).setChecked(true); break;
-                case Purchase.PRIORITY_LOW:
+                case LOW:
                     ((RadioButton) findViewById(R.id.radio_purchase_priority_low)).setChecked(true); break;
             }
         }

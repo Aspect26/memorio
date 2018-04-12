@@ -26,6 +26,7 @@ import java.util.Calendar;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.Utils;
@@ -94,7 +95,7 @@ public class AddReminderActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    reminder.setPriority(Reminder.PRIORITY_HIGH);
+                    reminder.setPriority(Priority.HIGH);
                 }
             }
         });
@@ -104,7 +105,7 @@ public class AddReminderActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    reminder.setPriority(Reminder.PRIORITY_NORMAL);
+                    reminder.setPriority(Priority.MEDIUM);
                 }
             }
         });
@@ -114,7 +115,7 @@ public class AddReminderActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    reminder.setPriority(Reminder.PRIORITY_LOW);
+                    reminder.setPriority(Priority.LOW);
                 }
             }
         });
@@ -168,7 +169,7 @@ public class AddReminderActivity extends AddItemActivity {
             }
         });
 
-        this.setDefaultPriorityValue();
+        this.setInitialPriorityValue();
         this.setDefaultNotificationValue();
         this.refreshDateTimeTexts();
         this.setNotificationsEnabled(this.reminder.getDate() != null);
@@ -236,14 +237,14 @@ public class AddReminderActivity extends AddItemActivity {
         }
     }
 
-    private void setDefaultPriorityValue() {
+    private void setInitialPriorityValue() {
         if (this.reminder != null) {
             switch (this.reminder.getPriority()) {
-                case Reminder.PRIORITY_HIGH:
+                case HIGH:
                     ((RadioButton) findViewById(R.id.radio_priority_high)).setChecked(true); break;
-                case Reminder.PRIORITY_NORMAL:
+                case MEDIUM:
                     ((RadioButton) findViewById(R.id.radio_priority_normal)).setChecked(true); break;
-                case Reminder.PRIORITY_LOW:
+                case LOW:
                     ((RadioButton) findViewById(R.id.radio_priority_low)).setChecked(true); break;
             }
         }

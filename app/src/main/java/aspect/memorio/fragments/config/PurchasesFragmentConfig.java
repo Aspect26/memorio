@@ -41,6 +41,11 @@ public class PurchasesFragmentConfig extends ListFragmentConfig<Purchase> {
                 new Comparator<Purchase>() {
                     @Override
                     public int compare(Purchase left, Purchase right) {
+                        int comparisonByPriority = right.getPriority().value - left.getPriority().value;
+                        if (comparisonByPriority != 0) {
+                            return comparisonByPriority;
+                        }
+                        
                         return left.getCost() - right.getCost();
                     }
                 },

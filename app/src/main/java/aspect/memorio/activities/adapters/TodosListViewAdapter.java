@@ -13,6 +13,7 @@ import java.util.List;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListTodosFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Todo;
 import aspect.memorio.utils.Utils;
 
@@ -62,11 +63,11 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
 
             setOnClickListener(view, todo);
 
-            if (todo.getPriority() == Todo.PRIORITY_HIGH) {
+            if (todo.getPriority() == Priority.HIGH) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
-            } else if (todo.getPriority() == Todo.PRIORITY_NORMAL) {
+            } else if (todo.getPriority() == Priority.MEDIUM) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
-            } else if (todo.getPriority() == Todo.PRIORITY_LOW) {
+            } else if (todo.getPriority() == Priority.LOW) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }
 

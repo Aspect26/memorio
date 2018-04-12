@@ -37,7 +37,7 @@ public class TodoFragmentConfig extends ListFragmentConfig<Todo> {
                 new Comparator<Todo>() {
                     @Override
                     public int compare(Todo left, Todo right) {
-                        int comparisonByPriority = right.getPriority() - left.getPriority();
+                        int comparisonByPriority = right.getPriority().value - left.getPriority().value;
                         if (comparisonByPriority != 0) {
                             return comparisonByPriority;
                         }

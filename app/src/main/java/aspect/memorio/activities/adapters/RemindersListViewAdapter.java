@@ -13,6 +13,7 @@ import java.util.List;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListRemindersFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.utils.Utils;
 
@@ -57,11 +58,11 @@ public class RemindersListViewAdapter extends ArrayAdapter<Reminder> {
             setRemoveButtonAction(removeButton, reminder);
             setOnClickListener(view, reminder);
 
-            if (reminder.getPriority() == Reminder.PRIORITY_HIGH) {
+            if (reminder.getPriority() == Priority.HIGH) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
-            } else if (reminder.getPriority() == Reminder.PRIORITY_NORMAL) {
+            } else if (reminder.getPriority() == Priority.MEDIUM) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
-            } else if (reminder.getPriority() == Reminder.PRIORITY_LOW) {
+            } else if (reminder.getPriority() == Priority.LOW) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }
 

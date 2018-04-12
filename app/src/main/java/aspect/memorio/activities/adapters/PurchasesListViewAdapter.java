@@ -13,6 +13,7 @@ import java.util.List;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListPurchasesFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Purchase;
 import aspect.memorio.models.Todo;
 import aspect.memorio.utils.Utils;
@@ -61,11 +62,11 @@ public class PurchasesListViewAdapter extends ArrayAdapter<Purchase> {
 
             setOnClickListener(view, purchase);
 
-            if (purchase.getPriority() == Todo.PRIORITY_HIGH) {
+            if (purchase.getPriority() == Priority.HIGH) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
-            } else if (purchase.getPriority() == Todo.PRIORITY_NORMAL) {
+            } else if (purchase.getPriority() == Priority.MEDIUM) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
-            } else if (purchase.getPriority() == Todo.PRIORITY_LOW) {
+            } else if (purchase.getPriority() == Priority.LOW) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }
         }

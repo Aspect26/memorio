@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Todo;
 import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.Utils;
@@ -85,7 +86,7 @@ public class AddTodoActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    todo.setPriority(Todo.PRIORITY_HIGH);
+                    todo.setPriority(Priority.HIGH);
                 }
             }
         });
@@ -95,7 +96,7 @@ public class AddTodoActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    todo.setPriority(Todo.PRIORITY_NORMAL);
+                    todo.setPriority(Priority.MEDIUM);
                 }
             }
         });
@@ -105,12 +106,12 @@ public class AddTodoActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    todo.setPriority(Todo.PRIORITY_LOW);
+                    todo.setPriority(Priority.LOW);
                 }
             }
         });
 
-        this.setDefaultPriorityValue();
+        this.setInitialPriorityValue();
         this.refreshDateTimeTexts();
     }
 
@@ -175,14 +176,14 @@ public class AddTodoActivity extends AddItemActivity {
         }
     }
 
-    private void setDefaultPriorityValue() {
+    private void setInitialPriorityValue() {
         if (this.todo != null) {
             switch (this.todo.getPriority()) {
-                case Todo.PRIORITY_HIGH:
+                case HIGH:
                     ((RadioButton) findViewById(R.id.radio_todo_priority_high)).setChecked(true); break;
-                case Todo.PRIORITY_NORMAL:
+                case MEDIUM:
                     ((RadioButton) findViewById(R.id.radio_todo_priority_normal)).setChecked(true); break;
-                case Todo.PRIORITY_LOW:
+                case LOW:
                     ((RadioButton) findViewById(R.id.radio_todo_priority_low)).setChecked(true); break;
             }
         }
