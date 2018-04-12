@@ -66,7 +66,7 @@ public class TodosListViewAdapter extends ArrayAdapter<Todo> {
             if (todo.getPriority() == Priority.HIGH) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.high_priority_item));
             } else if (todo.getPriority() == Priority.MEDIUM) {
-                view.setBackgroundColor(getContext().getResources().getColor(R.color.normal_priority_item));
+                view.setBackgroundColor(getContext().getResources().getColor(R.color.medium_priority_item));
             } else if (todo.getPriority() == Priority.LOW) {
                 view.setBackgroundColor(getContext().getResources().getColor(R.color.low_priority_item));
             }

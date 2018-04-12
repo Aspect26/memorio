@@ -17,6 +17,6 @@
     <color name="black">#000000</color>
 
     <color name="high_priority_item">#f9d0d0</color>
-    <color name="normal_priority_item">#ffffff</color>
+    <color name="medium_priority_item">#ffffff</color>
     <color name="low_priority_item">#cff5cf</color>
 </resources>

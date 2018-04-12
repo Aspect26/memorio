@@ -45,7 +45,7 @@ public class PurchasesFragmentConfig extends ListFragmentConfig<Purchase> {
                         if (comparisonByPriority != 0) {
                             return comparisonByPriority;
                         }
-                        
+
                         return left.getCost() - right.getCost();
                     }
                 },
