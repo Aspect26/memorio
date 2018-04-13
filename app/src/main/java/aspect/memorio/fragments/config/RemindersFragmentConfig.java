@@ -37,7 +37,7 @@ public class RemindersFragmentConfig extends ListFragmentConfig<Reminder> {
                 new Comparator<Reminder>() {
                     @Override
                     public int compare(Reminder left, Reminder right) {
-                        int comparisonByPriority = right.getPriority() - left.getPriority();
+                        int comparisonByPriority = right.getPriority().value - left.getPriority().value;
                         if (comparisonByPriority != 0) {
                             return comparisonByPriority;
                         }

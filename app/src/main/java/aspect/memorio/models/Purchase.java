@@ -1,26 +1,25 @@
 package aspect.memorio.models;
 
-import java.util.Date;
 import java.util.UUID;
 
-public class Todo {
+public class Purchase {
 
     private String id;
     private String label;
-    private Date date;
-    private boolean done;
+    private boolean bought;
+    private int cost;
     private Priority priority;
 
-    public Todo(String id, String label, Date date, boolean done, Priority priority) {
+    public Purchase(String id, String label, boolean bought, int cost, Priority priority) {
         this.id = id;
         this.label = label;
-        this.date = date;
-        this.done = done;
+        this.bought = bought;
+        this.cost = cost;
         this.priority = priority;
     }
 
-    public Todo() {
-        this(UUID.randomUUID().toString(), "", null, false, Priority.MEDIUM);
+    public Purchase(){
+        this(UUID.randomUUID().toString(), "", false, 0, Priority.MEDIUM);
     }
 
     public String getId() {
@@ -39,20 +38,20 @@ public class Todo {
         this.label = label;
     }
 
-    public Date getDate() {
-        return date;
+    public boolean isBought() {
+        return bought;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBought(boolean bought) {
+        this.bought = bought;
     }
 
-    public boolean isDone() {
-        return done;
+    public int getCost() {
+        return cost;
     }
 
-    public void setDone(boolean done) {
-        this.done = done;
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 
     public Priority getPriority() {

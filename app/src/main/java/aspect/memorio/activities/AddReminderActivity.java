@@ -26,7 +26,9 @@ import java.util.Calendar;
 
 import aspect.memorio.R;
 import aspect.memorio.fragments.ListFragment;
+import aspect.memorio.models.Priority;
 import aspect.memorio.models.Reminder;
+import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.Utils;
 
 public class AddReminderActivity extends AddItemActivity {
@@ -65,7 +67,7 @@ public class AddReminderActivity extends AddItemActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveNoteAndExit();
+                saveReminderAndExit();
             }
         });
 
@@ -85,7 +87,7 @@ public class AddReminderActivity extends AddItemActivity {
             }
         });
 
-        EditText textEditor = findViewById(R.id.edit_text_new_note_text);
+        EditText textEditor = findViewById(R.id.edit_text_new_reminder_text);
         textEditor.setText(this.reminder != null? this.reminder.getText() : "");
 
         RadioButton highPriorityButton = findViewById(R.id.radio_priority_high);
@@ -93,7 +95,7 @@ public class AddReminderActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    reminder.setPriority(Reminder.PRIORITY_HIGH);
+                    reminder.setPriority(Priority.HIGH);
                 }
             }
         });
@@ -103,7 +105,7 @@ public class AddReminderActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    reminder.setPriority(Reminder.PRIORITY_NORMAL);
+                    reminder.setPriority(Priority.MEDIUM);
                 }
             }
         });
@@ -113,7 +115,7 @@ public class AddReminderActivity extends AddItemActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                 if (checked) {
-                    reminder.setPriority(Reminder.PRIORITY_LOW);
+                    reminder.setPriority(Priority.LOW);
                 }
             }
         });
@@ -167,7 +169,7 @@ public class AddReminderActivity extends AddItemActivity {
             }
         });
 
-        this.setDefaultPriorityValue();
+        this.setInitialPriorityValue();
         this.setDefaultNotificationValue();
         this.refreshDateTimeTexts();
         this.setNotificationsEnabled(this.reminder.getDate() != null);
@@ -176,7 +178,7 @@ public class AddReminderActivity extends AddItemActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ListFragment.INTENT_ITEM, this.reminder.toString());
+        outState.putString(ListFragment.INTENT_ITEM, Serialization.serializeReminder(this.reminder));
     }
 
     private void showDateDialog() {
@@ -235,14 +237,14 @@ public class AddReminderActivity extends AddItemActivity {
         }
     }
 
-    private void setDefaultPriorityValue() {
+    private void setInitialPriorityValue() {
         if (this.reminder != null) {
             switch (this.reminder.getPriority()) {
-                case Reminder.PRIORITY_HIGH:
+                case HIGH:
                     ((RadioButton) findViewById(R.id.radio_priority_high)).setChecked(true); break;
-                case Reminder.PRIORITY_NORMAL:
+                case MEDIUM:
                     ((RadioButton) findViewById(R.id.radio_priority_normal)).setChecked(true); break;
-                case Reminder.PRIORITY_LOW:
+                case LOW:
                     ((RadioButton) findViewById(R.id.radio_priority_low)).setChecked(true); break;
             }
         }
@@ -292,7 +294,7 @@ public class AddReminderActivity extends AddItemActivity {
     private void setReminder(String reminderString) {
         if (reminderString != null) {
             try {
-                this.reminder = Reminder.createFromString(reminderString);
+                this.reminder = Serialization.deserializeReminder(reminderString);
             } catch (ParseException ignored) {
 
             }
@@ -321,12 +323,12 @@ public class AddReminderActivity extends AddItemActivity {
         );
     }
 
-    private void saveNoteAndExit() {
-        final String text = ((EditText) findViewById(R.id.edit_text_new_note_text)).getText().toString();
+    private void saveReminderAndExit() {
+        final String text = ((EditText) findViewById(R.id.edit_text_new_reminder_text)).getText().toString();
         reminder.setText(text);
 
         Intent intent = new Intent();
-        intent.putExtra(ListFragment.INTENT_ITEM, reminder.toString());
+        intent.putExtra(ListFragment.INTENT_ITEM, Serialization.serializeReminder(reminder));
         setResult(RESULT_OK, intent);
         finish();
     }

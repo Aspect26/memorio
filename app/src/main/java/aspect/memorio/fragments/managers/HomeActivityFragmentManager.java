@@ -8,6 +8,7 @@ import aspect.memorio.R;
 import aspect.memorio.activities.HomeActivity;
 import aspect.memorio.fragments.AboutFragment;
 import aspect.memorio.fragments.ChangelogFragment;
+import aspect.memorio.fragments.ListPurchasesFragment;
 import aspect.memorio.fragments.ListRemindersFragment;
 import aspect.memorio.fragments.ListTodosFragment;
 import aspect.memorio.fragments.PreferencesFragment;
@@ -15,12 +16,13 @@ import aspect.memorio.fragments.PreferencesFragment;
 public class HomeActivityFragmentManager {
 
     public enum FragmentType {
-        REMINDERS_LIST, TODO_LIST, PREFERENCES, CHANGELOG, ABOUT
+        REMINDERS_LIST, TODO_LIST, PURCHASES_LIST, PREFERENCES, CHANGELOG, ABOUT
     }
 
     private final HomeActivity homeActivity;
     private final ListRemindersFragment listRemindersFragment;
     private final ListTodosFragment listTodosFragment;
+    private final ListPurchasesFragment listPurchasesFragment;
     private final AboutFragment aboutFragment;
     private final PreferencesFragment preferencesFragment;
     private final ChangelogFragment changelogFragment;
@@ -30,6 +32,7 @@ public class HomeActivityFragmentManager {
 
         this.listRemindersFragment = new ListRemindersFragment();
         this.listTodosFragment = new ListTodosFragment();
+        this.listPurchasesFragment = new ListPurchasesFragment();
         this.aboutFragment = new AboutFragment();
         this.preferencesFragment = new PreferencesFragment();
         this.changelogFragment = new ChangelogFragment();
@@ -56,6 +59,8 @@ public class HomeActivityFragmentManager {
                 return this.listRemindersFragment;
             case TODO_LIST:
                 return this.listTodosFragment;
+            case PURCHASES_LIST:
+                return this.listPurchasesFragment;
             case ABOUT:
                 return this.aboutFragment;
             case PREFERENCES:

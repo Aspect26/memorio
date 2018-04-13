@@ -37,6 +37,12 @@
             android:windowSoftInputMode="stateVisible">
         </activity>
 
+        <activity android:name=".activities.AddPurchaseActivity"
+            android:label="@string/title_activity_add_purchase"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible">
+        </activity>
+
     </application>
 
 </manifest>

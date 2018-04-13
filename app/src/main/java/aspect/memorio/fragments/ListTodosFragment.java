@@ -6,6 +6,7 @@ import aspect.memorio.R;
 import aspect.memorio.fragments.config.TodoFragmentConfig;
 import aspect.memorio.models.Todo;
 import aspect.memorio.storage.ItemsStorage;
+import aspect.memorio.utils.Serialization;
 import aspect.memorio.utils.SnackbarUtils;
 
 public class ListTodosFragment extends ListFragment<Todo> {
@@ -17,7 +18,7 @@ public class ListTodosFragment extends ListFragment<Todo> {
     public void completeTodo(final Todo todo) {
         todo.setDone(true);
         this.storage.updateOrAdd(todo);
-        this.reinitializeItemsView();
+        this.reinitializeView();
 
         if (getView() != null) {
             SnackbarUtils.showUndoSnackbar(getView(), R.string.snackbar_todo_completed, new View.OnClickListener() {
@@ -25,7 +26,7 @@ public class ListTodosFragment extends ListFragment<Todo> {
                 public void onClick(View view) {
                     todo.setDone(false);
                     storage.updateOrAdd(todo);
-                    reinitializeItemsView();
+                    reinitializeView();
                 }
             });
         }
@@ -34,5 +35,10 @@ public class ListTodosFragment extends ListFragment<Todo> {
     @Override
     protected ItemsStorage<Todo> getStorage() {
         return this.homeActivity.getTodosStorage();
+    }
+
+    @Override
+    protected String serializeItem(Todo item) {
+        return Serialization.serializeTodo(item);
     }
 }

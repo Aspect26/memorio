@@ -70,7 +70,7 @@ public abstract class ListFragment<T> extends Fragment {
         itemsListView.setAdapter(this.itemsViewAdapter);
 
         this.setAutomaticUpdate();
-        this.reinitializeItemsView();
+        this.reinitializeView();
 
         return view;
     }
@@ -78,7 +78,7 @@ public abstract class ListFragment<T> extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        this.reinitializeItemsView();
+        this.reinitializeView();
     }
 
     @Override
@@ -98,14 +98,14 @@ public abstract class ListFragment<T> extends Fragment {
 
     public void removeItem(final T item) {
         this.storage.remove(item);
-        this.reinitializeItemsView();
+        this.reinitializeView();
 
         if (getView() != null) {
             SnackbarUtils.showUndoSnackbar(getView(), this.fragmentConfig.stringItemRemoved, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     storage.add(item);
-                    reinitializeItemsView();
+                    reinitializeView();
                 }
             });
         }
@@ -113,7 +113,9 @@ public abstract class ListFragment<T> extends Fragment {
 
     protected abstract ItemsStorage<T> getStorage();
 
-    protected void reinitializeItemsView() {
+    protected abstract String serializeItem(T item);
+
+    protected void reinitializeView() {
         if (this.storage == null) {
             return;
         }
@@ -150,7 +152,7 @@ public abstract class ListFragment<T> extends Fragment {
                 homeActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        reinitializeItemsView();
+                        reinitializeView();
                     }
                 });
             }
@@ -160,17 +162,17 @@ public abstract class ListFragment<T> extends Fragment {
 
     private void addItem(T item) {
         this.storage.add(item);
-        this.reinitializeItemsView();
+        this.reinitializeView();
     }
 
     private void updateItem(T item) {
         this.storage.updateOrAdd(item);
-        this.reinitializeItemsView();
+        this.reinitializeView();
     }
 
     private void gotoEditItemActivity(T item) {
         Intent intent = new Intent(homeActivity, this.fragmentConfig.addItemActivity);
-        intent.putExtra(INTENT_ITEM, item.toString());
+        intent.putExtra(INTENT_ITEM, this.serializeItem(item));
         startActivityForResult(intent, REQUEST_EDIT);
     }
 

@@ -15,6 +15,8 @@ import aspect.memorio.R;
 import aspect.memorio.fragments.managers.HomeActivityFragmentManager;
 import aspect.memorio.models.Reminder;
 import aspect.memorio.notifications.NotificationsManager;
+import aspect.memorio.storage.PurchasesStorage;
+import aspect.memorio.storage.DeviceFilePurchasesStorage;
 import aspect.memorio.storage.DeviceFileRemindersStorage;
 import aspect.memorio.storage.DeviceFileTODOsStorage;
 import aspect.memorio.storage.RemindersStorage;
@@ -24,6 +26,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private RemindersStorage remindersStorage;
     private TodosStorage todosStorage;
+    private PurchasesStorage purchasesStorage;
+
     private NotificationsManager notificationsManager;
     private HomeActivityFragmentManager fragmentManager;
 
@@ -34,6 +38,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         this.remindersStorage.loadAll();
         this.todosStorage = new DeviceFileTODOsStorage(this);
         this.todosStorage.loadAll();
+        this.purchasesStorage = new DeviceFilePurchasesStorage(this);
+        this.purchasesStorage.loadAll();
 
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -88,6 +94,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.REMINDERS_LIST);
         } else if (id == R.id.nav_todos) {
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.TODO_LIST);
+        } else if (id == R.id.nav_purchases) {
+            this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.PURCHASES_LIST);
         } else if (id == R.id.nav_settings) {
             this.fragmentManager.showFragment(HomeActivityFragmentManager.FragmentType.PREFERENCES);
         } else if (id == R.id.nav_about) {
@@ -111,5 +119,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public TodosStorage getTodosStorage() {
         return this.todosStorage;
+    }
+
+    public PurchasesStorage getPurchasesStorage() {
+        return this.purchasesStorage;
     }
 }
