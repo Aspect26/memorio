@@ -21,7 +21,7 @@ public abstract class ListViewAdapterTemplate<T> extends ArrayAdapter<T> {
 
     private static final float MIN_OPACITY = 0.3f;
 
-    private final ListFragment<T> fragment;
+    protected final ListFragment<T> fragment;
     private final ListViewAdapterItemConfig config;
 
     public ListViewAdapterTemplate(Context context, List<T> items, ListFragment<T> fragment, ListViewAdapterItemConfig config) {
@@ -111,8 +111,8 @@ public abstract class ListViewAdapterTemplate<T> extends ArrayAdapter<T> {
 
     private void setOpacity(View view, T item) {
         float opacity = this.getTextOpacity(item);
-        view.findViewById(R.id.reminder_text).setAlpha(opacity);
-        view.findViewById(R.id.reminder_remaining_time).setAlpha(opacity);
+        view.findViewById(this.config.text).setAlpha(opacity);
+        view.findViewById(this.config.additionalText).setAlpha(opacity);
     }
 
     protected int getPriorityColor(Priority priority) {
