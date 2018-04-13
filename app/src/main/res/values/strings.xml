@@ -63,7 +63,7 @@
     <string name="preference_key_daily_todo">notification-daily-todo</string>
     <string name="preference_key_reminders_notification">notification-reminder</string>
 
-    <string name="changelog_v_1_1_title">1.1 : 76 (DD.MM.2018 - Purchases)</string>
+    <string name="changelog_v_1_1_title">1.1 : 76 (13.04.2018 - Purchases)</string>
     <string name="changelog_v_1_1_summary">
 - Added purchases tab\
 - Added status bar to purchases tab
